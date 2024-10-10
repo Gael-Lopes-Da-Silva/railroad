@@ -14,7 +14,7 @@ export function authentification(request, response, next) {
         return response.status(401).json({
             message: "Something went wrong while checking authorizations !",
             error: 1,
-            error_message: "A token is needed in headers>Authorization !",
+            error_message: "A token is needed !",
         });
     }
 
