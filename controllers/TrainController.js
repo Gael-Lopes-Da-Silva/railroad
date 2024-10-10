@@ -6,7 +6,7 @@ export async function createTrain(
   end_station,
   departure_time
 ) {
-  await TrainModel.create({
+  await TrainModel.createTrain({
     name: name,
     start_station: start_station,
     end_station: end_station,
@@ -14,14 +14,14 @@ export async function createTrain(
   });
 }
 
-export async function getTrain(id) {
-  const train = await TrainModel.findById(id);
-  return train;
-}
-
 export async function getAllTrains() {
   const trains = await TrainModel.find({ deletedAt: null });
   return trains;
+}
+
+export async function getTrain(id) {
+  const train = await TrainModel.findById(id);
+  return train;
 }
 
 export async function updateTrain(id, pseudo, email, password) {

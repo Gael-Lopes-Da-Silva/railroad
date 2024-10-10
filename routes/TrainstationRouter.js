@@ -4,9 +4,9 @@ import dotenv from "dotenv/config";
 
 import {
     createTrainstation,
-    updateTrainstation,
     getAllTrainstations,
     getTrainstation,
+    updateTrainstation,
     deleteTrainstation,
 } from "../controllers/TrainstationController.js";
 
