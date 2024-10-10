@@ -1,6 +1,8 @@
 import { getUser } from "../controllers/UserController.js";
 
 export function checkEmployee(request, response, next) {
+    request.params.id = request.user.id;
+    
     getUser(request).then((user) => {
         if (user.role == "employee" || user.role == "admin") {
             next();
