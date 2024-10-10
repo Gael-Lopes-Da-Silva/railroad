@@ -41,6 +41,7 @@ router.post("/get",(request, response) => {
     getAllTrains().then((trains) => {
         response.status(202).json({
             message: `Trains fetched successfully !`,
+            trains: trains,
             error: 0,
         });
     }).catch((error) => {
@@ -56,6 +57,7 @@ router.post("/get/:id", (request, response) => {
     getTrain(request.params.id).then((train) => {
         response.status(200).json({
             message: `Train fetched successfully !`,
+            train: train,
             error: 0,
         });
     }).catch((error) => {

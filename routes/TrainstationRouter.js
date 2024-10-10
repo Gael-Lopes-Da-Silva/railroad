@@ -58,6 +58,7 @@ router.post("/get/:id", (request, response) => {
     .then((trainstation) => {
         response.status(200).json({
             message: `Transtation fetched successfully !`,
+            trainstation: trainstation,
             error: 0,
         });
     }).catch((error) => {
