@@ -82,7 +82,6 @@ router.post("/update/:id", authentification, (request, response) => {
     });
 });
 
-// Update a train
 router.post("/update/:id", authentification, (request, response) => {
     updateTrain(request.params.id, request.body.name, request.body.start_station, request.body.end_station, request.body.departure_time).then(() => {
         response.status(202).json({
