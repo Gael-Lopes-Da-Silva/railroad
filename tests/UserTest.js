@@ -1,4 +1,4 @@
-import chai from "chai";
+import * as chai from "chai";
 import chaiHttp from "chai-http";
 import app from "../server.js";
 
@@ -18,9 +18,12 @@ before(() => {
 
 describe("User registration and login", () => {
   it("Should register a new user", async () => {
-    const response = await chai.request(app).post("/users/register").send(userCreds)
-
-    expect(response).to.have.status(201)
-    expect(response.body).to.have.property("pseudo")
+    const response = await chai
+      .request(app)
+      .post("/users/register")
+      .send(userCreds);
+      
+    expect(response).to.have.status(201);
+    expect(response.body).to.have.property("pseudo");
   });
 });
