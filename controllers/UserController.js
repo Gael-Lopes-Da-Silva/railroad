@@ -2,54 +2,74 @@ import bcrypt from "bcrypt";
 
 import UserModel from "../models/UserModel.js";
 
-export async function createUser(pseudo, email, password) {
-	const hash = bcrypt.hashSync(password, 10);
-
+export async function createUser(request) {
 	await UserModel.create({
-		pseudo: pseudo,
-		password: hash,
-		email: email,
+		pseudo: request.body.pseudo,
+		password: bcrypt.hashSync(request.body.password, 10),
+		email: request.body.email,
 	});
 }
 
-export async function updateUser(id, pseudo, email, password) {
-	const hash = bcrypt.hashSync(password, 10);
+export async function updateUser(request) {
+    if (request.params.id == request.user.id) {
+        return await UserModel.findByIdAndUpdate(request.params.id, {
+            pseudo: request.body.pseudo,
+            password: bcrypt.hashSync(request.body.password, 10),
+            email: request.body.email,
+        });
+    }
 
-	return await UserModel.findByIdAndUpdate(id, {
-		pseudo: pseudo,
-		password: hash,
-		email: email,
-	});
+    return null;
 }
 
-export async function deleteUser(id) {
-	return await UserModel.findByIdAndUpdate(id, {
-		deletedAt: Date.now(),
-	});
+export async function deleteUser(request) {
+    if (request.params.id == request.user.id) {
+        return await UserModel.findByIdAndUpdate(request.params.id, {
+            deletedAt: Date.now(),
+        });
+    }
+
+    return null;
 }
 
-export async function getUser(id) {
-	const user = await UserModel.findById(id);
-	return user;
+export async function getUser(request) {
+	return await UserModel.findById(request.params.id, { deletedAt: null });
 }
 
 export async function getAllUsers() {
-	const users = await UserModel.find({ deletedAt: null });
-	return users;
+	return await UserModel.find({ deletedAt: null });
 }
 
-export async function login(email, password) {
-	const user = await UserModel.findOne({ email: email });
+export async function login(request) {
+	const user = await UserModel.findOne({ email: request.body.email });
 
     if (!user) {
-        return false;
+        return null;
     }
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(request.body.password, user.password);
 
     if (!match) {
-        return false;
+        return null;
     }
 
     return user;
+}
+
+export async function setAdmin(request) {
+    return await UserModel.findByIdAndUpdate(request.params.id, {
+        role: "admin",
+    });
+}
+
+export async function setEmployee(request) {
+    return await UserModel.findByIdAndUpdate(request.params.id, {
+        role: "employee",
+    });
+}
+
+export async function setUser(request) {
+    return await UserModel.findByIdAndUpdate(request.params.id, {
+        role: "user",
+    });
 }

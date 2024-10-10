@@ -1,35 +1,33 @@
 import TrainstationModel from "../models/TrainstationModel.js";
 
-export async function createTrainstation(name, open_hour, close_hour, image) {
+export async function createTrainstation(request) {
     await TrainstationModel.create({
-        name: name,
-        open_hour: open_hour,
-        close_hour: close_hour,
-        image: image,
+        name: request.body.name,
+        open_hour: request.body.open_hour,
+        close_hour: request.body.close_hour,
+        image: request.body.image,
     });
 }
 
 export async function getAllTrainstations() {
-    const trains = await TrainstationModel.find({ deletedAt: null });
-    return trains;
+    return await TrainstationModel.find({ deletedAt: null });
 }
 
-export async function getTrainstation(id) {
-    const train = await TrainstationModel.findById(id);
-    return train;
+export async function getTrainstation(request) {
+    return await TrainstationModel.findById(request.params.id, { deletedAt: null });
 }
 
-export async function updateTrainstation(id, name, open_hour, close_hour, image) {
-    await TrainstationModel.findByIdAndUpdate(id, {
-        name: name,
-        open_hour: open_hour,
-        close_hour: close_hour,
-        image: image,
+export async function updateTrainstation(request) {
+    return await TrainstationModel.findByIdAndUpdate(request.params.id, {
+        name: request.body.name,
+        open_hour: request.body.open_hour,
+        close_hour: request.body.close_hour,
+        image: request.body.image,
     });
 }
 
-export async function deleteTrainstation(id) {
-    await TrainstationModel.findByIdAndUpdate(id, {
+export async function deleteTrainstation(request) {
+    return await TrainstationModel.findByIdAndUpdate(request.params.id, {
         deletedAt: Date.now(),
     });
 }
