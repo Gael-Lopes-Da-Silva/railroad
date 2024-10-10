@@ -107,11 +107,19 @@ router.post("/get/:id", (request, response) => {
 });
 
 router.post("/update/:id", (request, response) => {
-    updateUser(request.params.id, request.body.pseudo, request.body.email, request.body.password).then(() => {
-        response.status(202).json({
-            message: "User updated successfully !",
-            error: 0,
-        });
+    updateUser(request.params.id, request.body.pseudo, request.body.email, request.body.password).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "User updated successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Something went wrong while updating user !",
+                error: 1,
+                error_message: "Can't find user !",
+            }); 
+        }
     }).catch((error) => {
         response.status(404).json({
             message: "Something went wrong while updating user !",
