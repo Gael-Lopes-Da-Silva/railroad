@@ -10,7 +10,6 @@ const Trainstation = new mongoose.model(
         required: true,
         match: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
       },
-      close_hour: { type: Date, required: true },
       close_hour: {
         type: String,
         required: true,

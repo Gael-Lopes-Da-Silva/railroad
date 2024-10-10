@@ -69,7 +69,7 @@ router.post("/login", (request, response) => {
     });
 });
 
-router.post("/get", authentification, checkAdmin, (request, response) => {
+router.post("/get", (request, response) => {
     getAllUsers().then((users) => {
         response.status(200).json({
             message: "Users fetched successfully !",
