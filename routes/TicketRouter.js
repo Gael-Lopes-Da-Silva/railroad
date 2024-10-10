@@ -14,7 +14,7 @@ import { checkEmployee } from "../middlewares/CheckEmployee.js";
 
 const router = express.Router();
 
-router.post("/book", (request, response) => {
+router.post("/book", authentification, (request, response) => {
     createTicket(request).then((ticket) => {
         if (ticket) {
             response.status(201).json({
@@ -37,7 +37,7 @@ router.post("/book", (request, response) => {
     });
 });
 
-router.post("/get", (request, response) => {
+router.post("/get", authentification, checkEmployee, (request, response) => {
     getAllTickets().then((tickets) => {
         response.status(202).json({
             message: "Tickets fetched successfully !",
@@ -53,7 +53,7 @@ router.post("/get", (request, response) => {
     });
 });
 
-router.post("/get/:id", (request, response) => {
+router.post("/get/:id", authentification, checkEmployee, (request, response) => {
     getTicket(request).then((ticket) => {
         if (ticket) {
             response.status(200).json({
@@ -77,7 +77,7 @@ router.post("/get/:id", (request, response) => {
     });
 });
 
-router.post("/validate/:id", (request, response) => {
+router.post("/validate/:id", authentification, checkEmployee, (request, response) => {
     validateTicket(request).then((ticket) => {
         if (ticket) {
             response.status(200).json({
