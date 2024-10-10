@@ -1,4 +1,4 @@
-import { getUser } from "../models/UserController.js";
+import { getUser } from "../controllers/UserController.js";
 
 export function checkEmployee(request, response, next) {
     getUser(request).then((user) => {
