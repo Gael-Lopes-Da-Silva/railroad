@@ -114,4 +114,4 @@ router.post("/delete/:id", authentification, (request, response) => {
     });
 });
 
-export default Train;
+export default router;

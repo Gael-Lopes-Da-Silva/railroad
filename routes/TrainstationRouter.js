@@ -100,4 +100,4 @@ router.post("/delete/:id", (request, response) => {
     });
 });
 
-export default Trainstation;
+export default router;
