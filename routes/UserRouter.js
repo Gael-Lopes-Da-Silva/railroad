@@ -14,7 +14,7 @@ import {
     updateUser,
     deleteUser,
     getUser,
-    getAllUser,
+    getAllUsers,
     login,
 } from "../controllers/UserController.js";
 
@@ -67,7 +67,7 @@ router.post("/login", (request, response) => {
 });
 
 router.post("/get", (request, response) => {
-    getAllUser().then((users) => {
+    getAllUsers().then((users) => {
         response.status(200).json({
             message: "Users fetched successfully !",
             users: users,
