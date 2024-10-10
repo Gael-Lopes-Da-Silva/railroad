@@ -25,7 +25,7 @@ import { checkEmployee } from "../middlewares/CheckEmployee.js";
 const router = express.Router();
 
 router.post("/register", (request, response) => {
-    createUser(request.body.username, request.body.email, request.body.password).then(() => {
+    createUser(request.body.pseudo, request.body.email, request.body.password).then(() => {
         response.status(201).json({
             message: `User registered successfully !`,
             error: 0,
@@ -99,7 +99,7 @@ router.post("/get/:id", (request, response) => {
 });
 
 router.post("/update/:id", (request, response) => {
-    updateUser(request.params.id, request.body.username, request.body.email, request.body.password).then(() => {
+    updateUser(request.params.id, request.body.pseudo, request.body.email, request.body.password).then(() => {
         response.status(202).json({
             message: "User updated successfully !",
             error: 0,
