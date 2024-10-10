@@ -72,21 +72,6 @@ router.post("/get/:id", (request, response) => {
 router.post("/update/:id", authentification, (request, response) => {
     updateTrain(request.params.id, request.body.name, request.body.start_station, request.body.end_station, request.body.departure_time).then(() => {
         response.status(202).json({
-            message: `Train updated successfully !`,
-            error: 0,
-        });
-    }).catch((error) => {
-        response.status(404).json({
-            message: `Something went wrong while updating train !`,
-            error: 1,
-            error_message: error,
-        });
-    });
-});
-
-router.post("/update/:id", authentification, (request, response) => {
-    updateTrain(request.params.id, request.body.name, request.body.start_station, request.body.end_station, request.body.departure_time).then(() => {
-        response.status(202).json({
             message: `Train ${request.params.id} updated successfully !`,
             error: 0,
         });

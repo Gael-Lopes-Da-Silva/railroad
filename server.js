@@ -6,6 +6,7 @@ import swaggerUiExpress from "swagger-ui-express";
 import TrainRouter from "./routes/TrainRouter.js";
 import TrainstationRouter from "./routes/TrainstationRouter.js";
 import UserRouter from "./routes/UserRouter.js";
+import TicketRouter from "./models/TicketModel.js";
 
 const app = express();
 const swaggerDocs = swaggerJsdoc({
@@ -42,3 +43,4 @@ app.get("/", (request, response) => {
 app.use("/trainstations/", TrainstationRouter);
 app.use("/trains/", TrainRouter);
 app.use("/users/", UserRouter);
+app.use("/tickets/", TicketRouter);
