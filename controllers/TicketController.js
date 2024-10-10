@@ -1,7 +1,7 @@
 import TicketModel from "../models/TicketModel.js";
 
 export async function createTicket(request) {
-    await TicketModel.createTicket({
+    await TicketModel.create({
         user: request.body.user,
         train: request.body.train,
     });

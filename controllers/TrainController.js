@@ -1,7 +1,7 @@
 import TrainModel from "../models/TrainModel.js";
 
 export async function createTrain(request) {
-    await TrainModel.createTrain({
+    await TrainModel.create({
         name: request.body.name,
         start_station: request.body.start_station,
         end_station: request.body.end_station,
