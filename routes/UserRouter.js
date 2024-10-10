@@ -32,7 +32,7 @@ router.post("/register", (request, response) => {
         });
     }).catch((error) => {
         response.status(400).json({
-            message: `Something went wrong while registering the user !`,
+            message: `Something went wrong while registering user !`,
             error: 1,
             error_message: error,
         });
@@ -52,14 +52,14 @@ router.post("/login", (request, response) => {
             });
         } else {
             response.status(404).json({
-                message: "Something went wrong while logging the user !",
+                message: "Something went wrong while logging user !",
                 error: 1,
                 error_message: "Invalid email or password !",
             });
         }
     }).catch((error) => {
         response.status(404).json({
-            message: "Something went wrong while logging the user !",
+            message: "Something went wrong while logging user !",
             error: 1,
             error_message: error,
         });

@@ -1,5 +1,11 @@
-import express, { response } from "express";
-import jsonwebtoken from "jsonwebtoken";
+/**
+ * @swagger
+ * tags:
+ *   name: Train
+ *   description: Train managment
+ */
+
+import express from "express";
 import dotenv from "dotenv/config";
 
 import {
@@ -11,51 +17,65 @@ import {
 } from "../controllers/TrainController.js";
 
 import { authentification } from "../middlewares/Authentification.js";
+import { checkAdmin } from "../middlewares/CheckAdmin.js";
+import { checkEmployee } from "../middlewares/CheckEmployee.js";
 
 const router = express.Router();
 
-// Train creation
-router.post("/", (request, response) => {
+router.post("/create", (request, response) => {
     createTrain(request.body.name, request.body.start_station, request.body.end_station, request.body.departure_time).then(() => {
         response.status(201).json({
-            message: `Train ${request.body.name} created successfull`,
+            message: `Train created successfully !`,
             error: 0,
         });
     }).catch((error) => {
         response.status(400).json({
-            message: `Something get wrong cannot create that train`,
+            message: `Something went wrong while creating train !`,
             error: 1,
             error_message: error,
         });
     });
 });
 
-// Get all trains
 router.post("/get",(request, response) => {
     getAllTrains().then((trains) => {
         response.status(202).json({
-            message: `Trains data : ${trains} !`,
+            message: `Trains fetched successfully !`,
             error: 0,
         });
     }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong ${trains} not found!`,
+            message: `Something went wrong while fetching trains !`,
             error: 1,
             error_message: error,
         });
     });
 });
 
-// Get one train by ID
 router.post("/get/:id", (request, response) => {
     getTrain(request.params.id).then((train) => {
         response.status(200).json({
-            message: `Your train data : ${train}`,
+            message: `Train fetched successfully !`,
             error: 0,
         });
-    }).catch(() => {
+    }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong ${train} not found!`,
+            message: `Something went wrong while fetching train !`,
+            error: 1,
+            error_message: error,
+        });
+    });
+});
+
+router.post("/update/:id", authentification, (request, response) => {
+    updateTrain(request.params.id, request.body.name, request.body.start_station, request.body.end_station, request.body.departure_time).then(() => {
+        response.status(202).json({
+            message: `Train updated successfully !`,
+            error: 0,
+        });
+    }).catch((error) => {
+        response.status(404).json({
+            message: `Something went wrong while updating train !`,
             error: 1,
             error_message: error,
         });
@@ -78,16 +98,15 @@ router.post("/update/:id", authentification, (request, response) => {
     });
 });
 
-// Delete one train by ID
 router.post("/delete/:id", authentification, (request, response) => {
     deleteTrain(request.params.id).then(() => {
         response.status(200).json({
-            message: `Train ${train.params.id} delete successfully !`,
+            message: `Train deleted successfully !`,
             error: 0,
         });
-    }).catch(() => {
+    }).catch((error) => {
         response.status(404).json({
-            message: `Train ${train.params.id} not found!`,
+            message: `Something went wrong while deleting train !`,
             error: 1,
             error_message: error,
         });

@@ -1,5 +1,11 @@
-import express, { response } from "express";
-import jsonwebtoken from "jsonwebtoken";
+/**
+ * @swagger
+ * tags:
+ *   name: Trainstation
+ *   description: Trainstation managment
+ */
+
+import express from "express";
 import dotenv from "dotenv/config";
 
 import {
@@ -11,85 +17,82 @@ import {
 } from "../controllers/TrainstationController.js";
 
 import { authentification } from "../middlewares/Authentification.js";
+import { checkAdmin } from "../middlewares/CheckAdmin.js";
+import { checkEmployee } from "../middlewares/CheckEmployee.js";
 
 const router = express.Router();
 
-// Trainstation creation
 router.post("/create", (request, response) => {
     createTrainstation(request.body.name, request.body.open_hour, request.body.close_hour, request.body.image).then(() => {
         response.status(201).json({
-            message: `Trainstation ${request.body.name} created successfull`,
+            message: `Trainstation created successfully !`,
             error: 0,
         });
     }).catch((error) => {
         response.status(400).json({
-            message: `Something get wrong cannot create trainstation`,
+            message: `Something went wrong while creating trainstation !`,
             error: 1,
             error_message: error,
         });
     });
 });
 
-// Get all trainstations
 router.post("/get", (request, response) => {
     getAllTrainstations().then((trainstations) => {
         response.status(202).json({
-            message: `Trainstations data : ${trainstation} !`,
+            message: `Trainstations fetched successfully !`,
+            trainstations: trainstations,
             error: 0,
         });
     }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong ${trainstation} not found!`,
+            message: `Something went wrong while fetching trainstations !`,
             error: 1,
             error_message: error,
         });
     });
 });
 
-// Get one trainstation by ID
 router.post("/get/:id", (request, response) => {
     getTrainstation(request.params.id)
     .then((trainstation) => {
         response.status(200).json({
-            message: `Trainstation data : ${trainstation}`,
+            message: `Transtation fetched successfully !`,
             error: 0,
         });
-    }).catch(() => {
+    }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong ${trainstation} not found!`,
+            message: `Something went wrong while fetching trainstation !`,
             error: 1,
             error_message: error,
         });
     });
 });
 
-
-// Update a trainstation
 router.post("/update/:id", (request, response) => {
     updateTrainstation(request.params.id, request.body.name, request.body.open_hour, request.body.close_hour,request.body.image).then(() => {
         response.status(202).json({
-            message: `Trainstation ${request.params.id} updated successfully !`,
+            message: `Trainstation updated successfully !`,
             error: 0,
-        }).catch(() => {
-            response.status(404).json({
-                message: `Something went wrong ${trainstation} not found!`,
-                error: 1,
-                error_message: error,
-            });
+        });
+    }).catch((error) => {
+        response.status(404).json({
+            message: `Something went wrong while updating trainstation !`,
+            error: 1,
+            error_message: error,
         });
     });
 });
 
-// Delete one trainstation by ID
 router.post("/delete/:id", (request, response) => {
     deleteTrainstation(request.params.id).then(() => {
         response.status(200).json({
-            message: `Trainstation ${trainstation.params.id} delete successfully !`,
+            message: `Trainstation deleted successfully !`,
             error: 0,
         });
-    }).catch(() => {
+    }).catch((error) => {
         response.status(404).json({
-            message: `Train ${trainstation.params.id} not found!`,
+            message: `Something went wrong while deleting trainstation !`,
             error: 1,
             error_message: error,
         });
