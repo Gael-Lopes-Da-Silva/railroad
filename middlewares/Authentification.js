@@ -6,11 +6,19 @@ export function authentification(request, response, next) {
 	const secret = process.env.SECRET;
 
 	if (token == "") {
-		return response.status(401).json({ error: "Token required !" });
+		return response.status(401).json({
+            message: "Something went wrong while checking authorizations !",
+            error: 1,
+            error_message: "A token is needed in headers>Authorization !",
+        });
 	}
 	
-	jsonwebtoken.verify(token, secret, (err, user) => {
-        if (err) return response.status(401).json({ error: "Invalid token !" });
+	jsonwebtoken.verify(token, secret, (error, user) => {
+        if (error) return response.status(401).json({
+            message: "Something went wrong while checking authorizations !",
+            error: 1,
+            error_message: error,
+        });
 
         request.user = user;
         next();

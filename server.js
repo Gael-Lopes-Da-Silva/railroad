@@ -39,10 +39,6 @@ app.get("/", (request, response) => {
 	response.sendFile("index.html", { root: "public" });
 });
 
-app.use("/users/", UserRouter);
-app.use("/trains/", TrainRouter);
 app.use("/trainstations/", TrainstationRouter);
-
-app.use((request, response, next) => {
-	response.status(404).send("ERROR 404: can't find ressource !")
-});
+app.use("/trains/", TrainRouter);
+app.use("/users/", UserRouter);

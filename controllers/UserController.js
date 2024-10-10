@@ -2,21 +2,21 @@ import bcrypt from "bcrypt";
 
 import UserModel from "../models/UserModel.js";
 
-export async function createUser(username, email, password) {
+export async function createUser(pseudo, email, password) {
 	const hash = bcrypt.hashSync(password, 10);
 
 	await UserModel.create({
-		username: username,
+		pseudo: pseudo,
 		password: hash,
 		email: email,
 	});
 }
 
-export async function updateUser(id, username, email, password) {
+export async function updateUser(id, pseudo, email, password) {
 	const hash = bcrypt.hashSync(password, 10);
 
 	await UserModel.findByIdAndUpdate(id, {
-		username: username,
+		username: pseudo,
 		password: hash,
 		email: email,
 	});
