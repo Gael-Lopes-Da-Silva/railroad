@@ -33,7 +33,7 @@ export async function getUser(id) {
 	return user;
 }
 
-export async function getAllUser() {
+export async function getAllUsers() {
 	const users = await UserModel.find({ deletedAt: null });
 	return users;
 }
