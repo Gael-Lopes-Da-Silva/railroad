@@ -22,7 +22,7 @@ import { checkEmployee } from "../middlewares/CheckEmployee.js";
 
 const router = express.Router();
 
-router.post("/create", (request, response) => {
+router.post("/create", authentification, checkAdmin, (request, response) => {
     createTrainstation(request).then(() => {
         response.status(201).json({
             message: "Trainstation created successfully !",
@@ -77,7 +77,7 @@ router.post("/get/:id", (request, response) => {
     });
 });
 
-router.post("/update/:id", (request, response) => {
+router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrainstation(request).then((trainstation) => {
         if (trainstation) {
             response.status(202).json({
@@ -100,7 +100,7 @@ router.post("/update/:id", (request, response) => {
     });
 });
 
-router.post("/delete/:id", (request, response) => {
+router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteTrainstation(request).then((trainstation) => {
         if (trainstation) {
             response.status(200).json({
