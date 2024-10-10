@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const Train = new mongoose.model("Train", new mongoose.Schema({
 	name: { type: String, required: true },
