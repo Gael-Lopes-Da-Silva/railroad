@@ -23,14 +23,14 @@ import { checkEmployee } from "../middlewares/CheckEmployee.js";
 const router = express.Router();
 
 router.post("/create", (request, response) => {
-    createTrainstation(request.body.name, request.body.open_hour, request.body.close_hour, request.body.image).then(() => {
+    createTrainstation(request).then(() => {
         response.status(201).json({
-            message: `Trainstation created successfully !`,
+            message: "Trainstation created successfully !",
             error: 0,
         });
     }).catch((error) => {
         response.status(400).json({
-            message: `Something went wrong while creating trainstation !`,
+            message: "Something went wrong while creating trainstation !",
             error: 1,
             error_message: error,
         });
@@ -40,13 +40,13 @@ router.post("/create", (request, response) => {
 router.post("/get", (request, response) => {
     getAllTrainstations().then((trainstations) => {
         response.status(202).json({
-            message: `Trainstations fetched successfully !`,
+            message: "Trainstations fetched successfully !",
             trainstations: trainstations,
             error: 0,
         });
     }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong while fetching trainstations !`,
+            message: "Something went wrong while fetching trainstations !",
             error: 1,
             error_message: error,
         });
@@ -54,16 +54,23 @@ router.post("/get", (request, response) => {
 });
 
 router.post("/get/:id", (request, response) => {
-    getTrainstation(request.params.id)
-    .then((trainstation) => {
-        response.status(200).json({
-            message: `Transtation fetched successfully !`,
-            trainstation: trainstation,
-            error: 0,
-        });
+    getTrainstation(request).then((trainstation) => {
+        if (trainstation) {
+            response.status(200).json({
+                message: "Transtation fetched successfully !",
+                trainstation: trainstation,
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Something went wrong while fetching trainstation !",
+                error: 1,
+                error_message: "Can't find trainstation !",
+            });
+        }
     }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong while fetching trainstation !`,
+            message: "Something went wrong while fetching trainstation !",
             error: 1,
             error_message: error,
         });
@@ -71,14 +78,22 @@ router.post("/get/:id", (request, response) => {
 });
 
 router.post("/update/:id", (request, response) => {
-    updateTrainstation(request.params.id, request.body.name, request.body.open_hour, request.body.close_hour,request.body.image).then(() => {
-        response.status(202).json({
-            message: `Trainstation updated successfully !`,
-            error: 0,
-        });
+    updateTrainstation(request).then((trainstation) => {
+        if (trainstation) {
+            response.status(202).json({
+                message: "Trainstation updated successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Something went wrong while updating trainstation !",
+                error: 1,
+                error_message: "Can't find trainstation !",
+            });
+        }
     }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong while updating trainstation !`,
+            message: "Something went wrong while updating trainstation !",
             error: 1,
             error_message: error,
         });
@@ -86,14 +101,22 @@ router.post("/update/:id", (request, response) => {
 });
 
 router.post("/delete/:id", (request, response) => {
-    deleteTrainstation(request.params.id).then(() => {
-        response.status(200).json({
-            message: `Trainstation deleted successfully !`,
-            error: 0,
-        });
+    deleteTrainstation(request).then((trainstation) => {
+        if (trainstation) {
+            response.status(200).json({
+                message: "Trainstation deleted successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Something went wrong while deleting trainstation !",
+                error: 1,
+                error_message: "Can't find trainstation !",
+            });
+        }
     }).catch((error) => {
         response.status(404).json({
-            message: `Something went wrong while deleting trainstation !`,
+            message: "Something went wrong while deleting trainstation !",
             error: 1,
             error_message: error,
         });
