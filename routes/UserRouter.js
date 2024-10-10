@@ -16,6 +16,9 @@ import {
     getUser,
     getAllUsers,
     login,
+    setAdmin,
+    setEmployee,
+    setUser,
 } from "../controllers/UserController.js";
 
 import { authentification } from "../middlewares/Authentification.js";
@@ -146,6 +149,75 @@ router.post("/delete/:id", authentification, (request, response) => {
     }).catch((error) => {
         response.status(404).json({
             message: "Somehting went wrong while deleting user !",
+            error: 1,
+            error_message: error,
+        });
+    });
+});
+
+router.post("/set/admin/:id", (request, response) => {
+    setAdmin(request).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "Role changed to admin successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Somehting went wrong while seting user role to admin !",
+                error: 1,
+                error_message: "Can't find user !",
+            });
+        }
+    }).catch((error) => {
+        response.status(404).json({
+            message: "Somehting went wrong while seting user role to admin !",
+            error: 1,
+            error_message: error,
+        });
+    });
+});
+
+router.post("/set/employee/:id", (request, response) => {
+    setEmployee(request).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "Role changed to employee successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Somehting went wrong while seting user role to employee !",
+                error: 1,
+                error_message: "Can't find user !",
+            });
+        }
+    }).catch((error) => {
+        response.status(404).json({
+            message: "Somehting went wrong while seting user role to employee !",
+            error: 1,
+            error_message: error,
+        });
+    });
+});
+
+router.post("/set/user/:id", (request, response) => {
+    setUser(request).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "Role changed to user successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Somehting went wrong while seting user role to user !",
+                error: 1,
+                error_message: "Can't find user !",
+            });
+        }
+    }).catch((error) => {
+        response.status(404).json({
+            message: "Somehting went wrong while seting user role to user !",
             error: 1,
             error_message: error,
         });

@@ -55,3 +55,21 @@ export async function login(request) {
 
     return user;
 }
+
+export async function setAdmin(request) {
+    return await UserModel.findByIdAndUpdate(request.params.id, {
+        role: "admin",
+    });
+}
+
+export async function setEmployee(request) {
+    return await UserModel.findByIdAndUpdate(request.params.id, {
+        role: "employee",
+    });
+}
+
+export async function setUser(request) {
+    return await UserModel.findByIdAndUpdate(request.params.id, {
+        role: "user",
+    });
+}
