@@ -22,7 +22,7 @@ describe("User registration and login", () => {
       .request(app)
       .post("/users/register")
       .send(userCreds);
-      
+    console.log(response.body)
     expect(response).to.have.status(201);
     expect(response.body).to.have.property("pseudo");
   });
