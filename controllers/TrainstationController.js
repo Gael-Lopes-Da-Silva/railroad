@@ -14,7 +14,7 @@ export async function getAllTrainstations() {
 }
 
 export async function getTrainstation(request) {
-    return await TrainstationModel.findById(request.params.id, { deletedAt: null });
+    return await TrainstationModel.findById(request.params.id, null, { deletedAt: null });
 }
 
 export async function updateTrainstation(request) {
