@@ -69,7 +69,7 @@ router.post("/login", (request, response) => {
     });
 });
 
-router.post("/get", (request, response) => {
+router.post("/get", authentification, checkEmployee, (request, response) => {
     getAllUsers().then((users) => {
         response.status(200).json({
             message: "Users fetched successfully !",
@@ -85,7 +85,7 @@ router.post("/get", (request, response) => {
     });
 });
 
-router.post("/get/:id", authentification, checkAdmin, (request, response) => {
+router.post("/get/:id", authentification, checkEmployee, (request, response) => {
     getUser(request).then((user) => {
         if (user) {
             response.status(200).json({

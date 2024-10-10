@@ -3,7 +3,7 @@ import UserModel from "../models/UserModel.js";
 export function checkEmployee(request, response, next) {
     const user = UserModel.findById(request.user.id);
 
-	if (user.permission == "employee") {
+	if (user.role == "employee" || user.role == "admin") {
 		next();
         return;
 	}

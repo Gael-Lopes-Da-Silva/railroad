@@ -15,11 +15,19 @@ import { checkEmployee } from "../middlewares/CheckEmployee.js";
 const router = express.Router();
 
 router.post("/book", (request, response) => {
-    createTicket(request).then(() => {
-        response.status(201).json({
-            message: "Ticket booked successfully !",
-            error: 0,
-        });
+    createTicket(request).then((ticket) => {
+        if (ticket) {
+            response.status(201).json({
+                message: "Ticket booked successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(400).json({
+                message: "Something went wrong while booking ticket !",
+                error: 1,
+                error_message: "Can't find train or user !",
+            });
+        }
     }).catch((error) => {
         response.status(400).json({
             message: "Something went wrong while booking ticket !",

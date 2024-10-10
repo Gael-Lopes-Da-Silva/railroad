@@ -3,7 +3,7 @@ import UserModel from "../models/UserModel.js";
 export function checkAdmin(request, response, next) {
     const user = UserModel.findById(request.user.id);
 
-	if (user.permission == "admin") {
+	if (user.role == "admin") {
 		next();
         return;
 	}

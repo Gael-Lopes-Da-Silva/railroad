@@ -1,7 +1,16 @@
 import TicketModel from "../models/TicketModel.js";
+import TrainModel from "../models/TrainModel.js";
+import UserModel from "../models/UserModel.js";
 
 export async function createTicket(request) {
-    await TicketModel.create({
+    const user = UserModel.findById(request.body.user, { deletedAt: null });
+    const train = TrainModel.findById(request.body.train, { deletedAt: null });
+    
+    if (!user || !train) {
+        return null;
+    }
+    
+    return await TicketModel.create({
         user: request.body.user,
         train: request.body.train,
     });
