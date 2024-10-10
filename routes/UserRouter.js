@@ -84,11 +84,19 @@ router.post("/get", (request, response) => {
 
 router.post("/get/:id", (request, response) => {
     getUser(request.params.id).then((user) => {
-        response.status(200).json({
-            message: "User fetched successfully !",
-            user: user,
-            error: 0,
-        });
+        if (user) {
+            response.status(200).json({
+                message: "User fetched successfully !",
+                user: user,
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Something went wrong while fetching user !",
+                error: 1,
+                error_message: "Can't find user !",
+            });
+        }
     }).catch((error) => {
         response.status(404).json({
             message: "Something went wrong while fetching user !",
