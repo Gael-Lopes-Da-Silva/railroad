@@ -130,11 +130,19 @@ router.post("/update/:id", (request, response) => {
 });
 
 router.post("/delete/:id", (request, response) => {
-    deleteUser(request.params.id).then(() => {
-        response.status(202).json({
-            message: "User deleted successfully !",
-            error: 0,
-        });
+    deleteUser(request.params.id).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "User deleted successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Somehting went wrong while deleting user !",
+                error: 1,
+                error_message: "Can't find user !",
+            });
+        }
     }).catch((error) => {
         response.status(404).json({
             message: "Somehting went wrong while deleting user !",

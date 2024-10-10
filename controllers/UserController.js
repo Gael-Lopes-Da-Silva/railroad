@@ -23,7 +23,7 @@ export async function updateUser(id, pseudo, email, password) {
 }
 
 export async function deleteUser(id) {
-	await UserModel.findByIdAndUpdate(id, {
+	return await UserModel.findByIdAndUpdate(id, {
 		deletedAt: Date.now(),
 	});
 }
