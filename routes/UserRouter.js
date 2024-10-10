@@ -69,7 +69,7 @@ router.post("/login", (request, response) => {
     });
 });
 
-router.post("/get", (request, response) => {
+router.post("/get", authentification, checkAdmin, (request, response) => {
     getAllUsers().then((users) => {
         response.status(200).json({
             message: "Users fetched successfully !",
@@ -85,7 +85,7 @@ router.post("/get", (request, response) => {
     });
 });
 
-router.post("/get/:id", (request, response) => {
+router.post("/get/:id", authentification, checkAdmin, (request, response) => {
     getUser(request).then((user) => {
         if (user) {
             response.status(200).json({
@@ -109,7 +109,7 @@ router.post("/get/:id", (request, response) => {
     });
 });
 
-router.post("/update/:id", authentification, (request, response) => {
+router.post("/update", authentification, (request, response) => {
     updateUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -132,7 +132,30 @@ router.post("/update/:id", authentification, (request, response) => {
     });
 });
 
-router.post("/delete/:id", authentification, (request, response) => {
+router.post("/update/:id", authentification, checkAdmin, (request, response) => {
+    updateUser(request).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "User updated successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Something went wrong while updating user !",
+                error: 1,
+                error_message: "Can't find user !",
+            }); 
+        }
+    }).catch((error) => {
+        response.status(404).json({
+            message: "Something went wrong while updating user !",
+            error: 1,
+            error_message: error,
+        });
+    });
+});
+
+router.post("/delete", authentification, (request, response) => {
     deleteUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -155,7 +178,30 @@ router.post("/delete/:id", authentification, (request, response) => {
     });
 });
 
-router.post("/set/admin/:id", (request, response) => {
+router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+    deleteUser(request).then((user) => {
+        if (user) {
+            response.status(202).json({
+                message: "User deleted successfully !",
+                error: 0,
+            });
+        } else {
+            response.status(404).json({
+                message: "Somehting went wrong while deleting user !",
+                error: 1,
+                error_message: "Can't find user !",
+            });
+        }
+    }).catch((error) => {
+        response.status(404).json({
+            message: "Somehting went wrong while deleting user !",
+            error: 1,
+            error_message: error,
+        });
+    });
+});
+
+router.post("/set/admin/:id", authentification, checkAdmin, (request, response) => {
     setAdmin(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -178,7 +224,7 @@ router.post("/set/admin/:id", (request, response) => {
     });
 });
 
-router.post("/set/employee/:id", (request, response) => {
+router.post("/set/employee/:id", authentification, checkAdmin, (request, response) => {
     setEmployee(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -201,7 +247,7 @@ router.post("/set/employee/:id", (request, response) => {
     });
 });
 
-router.post("/set/user/:id", (request, response) => {
+router.post("/set/user/:id", authentification, checkAdmin, (request, response) => {
     setUser(request).then((user) => {
         if (user) {
             response.status(202).json({

@@ -11,7 +11,7 @@ export async function createUser(request) {
 }
 
 export async function updateUser(request) {
-    if (request.params.id == request.user.id) {
+    if (request.params.id) {
         return await UserModel.findByIdAndUpdate(request.params.id, {
             pseudo: request.body.pseudo,
             password: bcrypt.hashSync(request.body.password, 10),
@@ -19,17 +19,23 @@ export async function updateUser(request) {
         });
     }
 
-    return null;
+    return await UserModel.findByIdAndUpdate(request.user.id, {
+        pseudo: request.body.pseudo,
+        password: bcrypt.hashSync(request.body.password, 10),
+        email: request.body.email,
+    });
 }
 
 export async function deleteUser(request) {
-    if (request.params.id == request.user.id) {
+    if (request.params.id) {
         return await UserModel.findByIdAndUpdate(request.params.id, {
             deletedAt: Date.now(),
         });
     }
-
-    return null;
+    
+    return await UserModel.findByIdAndUpdate(request.user.id, {
+        deletedAt: Date.now(),
+    });
 }
 
 export async function getUser(request) {
