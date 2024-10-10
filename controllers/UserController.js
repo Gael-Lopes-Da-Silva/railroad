@@ -16,7 +16,7 @@ export async function updateUser(id, pseudo, email, password) {
 	const hash = bcrypt.hashSync(password, 10);
 
 	await UserModel.findByIdAndUpdate(id, {
-		username: pseudo,
+		pseudo: pseudo,
 		password: hash,
 		email: email,
 	});
