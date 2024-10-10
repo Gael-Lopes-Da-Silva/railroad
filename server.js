@@ -3,18 +3,18 @@ import mongoose from "mongoose";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
+import TrainRouter from "./routes/TrainRouter.js";
+import TrainstationRouter from "./routes/TrainstationRouter.js";
 import UserRouter from "./routes/UserRouter.js";
-import PostRouter from "./routes/PostRouter.js";
-import CommentRouter from "./routes/CommentRouter.js";
 
 const app = express();
 const swaggerDocs = swaggerJsdoc({
 	swaggerDefinition: {
 		openapi: "3.0.0",
 		info: {
-			title: "Blogify API",
+			title: "Railroad API",
 			version: "1.0.0",
-			description: "Documentation for Blogify API",
+			description: "Documentation for Railraod API",
 		},
 		servers: [
 			{
@@ -27,7 +27,7 @@ const swaggerDocs = swaggerJsdoc({
 
 app.use("/docs", swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
 
-mongoose.connect("mongodb://127.0.0.1:27017/blogify").then(() => {
+mongoose.connect("mongodb://127.0.0.1:27017/railraod").then(() => {
 	console.log("Connected to database !");
 	app.listen(3000, () => console.log("Server running on http://localhost:3000 !"));
 });
@@ -40,8 +40,8 @@ app.get("/", (request, response) => {
 });
 
 app.use("/users/", UserRouter);
-app.use("/posts/", PostRouter);
-app.use("/comments/", CommentRouter);
+app.use("/trains/", TrainRouter);
+app.use("/trainstations/", TrainstationRouter);
 
 app.use((request, response, next) => {
 	response.status(404).send("ERROR 404: can't find ressource !")
