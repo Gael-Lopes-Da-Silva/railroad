@@ -1,4 +1,5 @@
 import TrainstationModel from "../models/TrainstationModel.js";
+import TrainModel from "../models/TrainModel.js";
 
 export async function createTrainstation(request) {
     await TrainstationModel.create({
@@ -27,6 +28,21 @@ export async function updateTrainstation(request) {
 }
 
 export async function deleteTrainstation(request) {
+    const startStationTrains = await TrainModel.find({ start_station: request.params.id });
+    const endsStationTrains = await TrainModel.find({ end_station: request.params.id });
+
+    startStationTrains.forEach((train) => {
+        TrainModel.findByIdAndUpdate(train.id, {
+            deletedAt: Date.now(),
+        });
+    });
+
+    endStationTrains.forEach((train) => {
+        TrainModel.findByIdAndUpdate(train.id, {
+            deletedAt: Date.now(),
+        });
+    });
+    
     return await TrainstationModel.findByIdAndUpdate(request.params.id, {
         deletedAt: Date.now(),
     });
