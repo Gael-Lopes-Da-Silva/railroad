@@ -29,17 +29,17 @@ export async function updateTrainstation(request) {
 
 export async function deleteTrainstation(request) {
     const startStationTrains = await TrainModel.find({ start_station: request.params.id });
-    const endsStationTrains = await TrainModel.find({ end_station: request.params.id });
+    const endStationTrains = await TrainModel.find({ end_station: request.params.id });
 
     startStationTrains.forEach((train) => {
         TrainModel.findByIdAndUpdate(train.id, {
-            deletedAt: Date.now(),
+            active: false,
         });
     });
 
     endStationTrains.forEach((train) => {
         TrainModel.findByIdAndUpdate(train.id, {
-            deletedAt: Date.now(),
+            active: false,
         });
     });
     
