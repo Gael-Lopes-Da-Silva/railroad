@@ -49,7 +49,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
 
 router.post("/get",(request, response) => {
     getAllTrains().then((trains) => {
-        response.status(200).json({
+        response.status(202).json({
             message: "Trains fetched successfully !",
             trains: trains,
             error: 0,
@@ -66,7 +66,7 @@ router.post("/get",(request, response) => {
 router.post("/get/:id", (request, response) => {
     getTrain(request).then((train) => {
         if (train) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Train fetched successfully !",
                 train: train,
                 error: 0,
@@ -90,7 +90,7 @@ router.post("/get/:id", (request, response) => {
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrain(request).then((train) => {
         if (train) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Train updated successfully !",
                 error: 0,
             });
@@ -113,7 +113,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteTrain(request).then((train) => {
         if (train) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Train deleted successfully !",
                 error: 0,
             });
@@ -136,7 +136,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
 router.post("/set/activate/:id", authentification, checkAdmin, (request, response) => {
     activateTrain(request).then((train) => {
         if (train) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Train activated successfully !",
                 error: 0,
             });
@@ -159,7 +159,7 @@ router.post("/set/activate/:id", authentification, checkAdmin, (request, respons
 router.post("/set/deactivate/:id", authentification, checkAdmin, (request, response) => {
     deactivateTrain(request).then((train) => {
         if (train) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Train deactivated successfully !",
                 error: 0,
             });

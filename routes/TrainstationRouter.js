@@ -56,7 +56,7 @@ router.post("/get", (request, response) => {
 router.post("/get/:id", (request, response) => {
     getTrainstation(request).then((trainstation) => {
         if (trainstation) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Transtation fetched successfully !",
                 trainstation: trainstation,
                 error: 0,
@@ -80,7 +80,7 @@ router.post("/get/:id", (request, response) => {
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrainstation(request).then((trainstation) => {
         if (trainstation) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Trainstation updated successfully !",
                 error: 0,
             });
@@ -103,7 +103,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteTrainstation(request).then((trainstation) => {
         if (trainstation) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Trainstation deleted successfully !",
                 error: 0,
             });
