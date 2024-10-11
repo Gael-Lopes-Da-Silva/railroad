@@ -29,7 +29,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
             error: 0,
         });
     }).catch((error) => {
-        response.status(400).json({
+        response.status(500).json({
             message: "Something went wrong while creating trainstation !",
             error: 1,
             error_message: error,
@@ -45,7 +45,7 @@ router.post("/get", (request, response) => {
             error: 0,
         });
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching trainstations !",
             error: 1,
             error_message: error,
@@ -69,7 +69,7 @@ router.post("/get/:id", (request, response) => {
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching trainstation !",
             error: 1,
             error_message: error,
@@ -80,7 +80,7 @@ router.post("/get/:id", (request, response) => {
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrainstation(request).then((trainstation) => {
         if (trainstation) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "Trainstation updated successfully !",
                 error: 0,
             });
@@ -92,7 +92,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while updating trainstation !",
             error: 1,
             error_message: error,
@@ -115,7 +115,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while deleting trainstation !",
             error: 1,
             error_message: error,

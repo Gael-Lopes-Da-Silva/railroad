@@ -22,14 +22,14 @@ router.post("/book", authentification, (request, response) => {
                 error: 0,
             });
         } else {
-            response.status(400).json({
+            response.status(404).json({
                 message: "Something went wrong while booking ticket !",
                 error: 1,
                 error_message: "Can't find train or user !",
             });
         }
     }).catch((error) => {
-        response.status(400).json({
+        response.status(500).json({
             message: "Something went wrong while booking ticket !",
             error: 1,
             error_message: error,
@@ -45,7 +45,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
             error: 0,
         });
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching tickets !",
             error: 1,
             error_message: error,
@@ -69,7 +69,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching ticket !",
             error: 1,
             error_message: error,
@@ -93,7 +93,7 @@ router.post("/validate/:id", authentification, checkEmployee, (request, response
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while validating ticket !",
             error: 1,
             error_message: error,

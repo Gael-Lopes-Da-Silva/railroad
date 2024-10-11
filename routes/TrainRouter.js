@@ -39,7 +39,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
             });
         }
     }).catch((error) => {
-        response.status(400).json({
+        response.status(500).json({
             message: "Something went wrong while creating train !",
             error: 1,
             error_message: error,
@@ -49,13 +49,13 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
 
 router.post("/get",(request, response) => {
     getAllTrains().then((trains) => {
-        response.status(202).json({
+        response.status(200).json({
             message: "Trains fetched successfully !",
             trains: trains,
             error: 0,
         });
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching trains !",
             error: 1,
             error_message: error,
@@ -79,7 +79,7 @@ router.post("/get/:id", (request, response) => {
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching train !",
             error: 1,
             error_message: error,
@@ -90,7 +90,7 @@ router.post("/get/:id", (request, response) => {
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrain(request).then((train) => {
         if (train) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "Train updated successfully !",
                 error: 0,
             });
@@ -102,7 +102,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while updating train !",
             error: 1,
             error_message: error,
@@ -125,7 +125,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while deleting train !",
             error: 1,
             error_message: error,
@@ -148,7 +148,7 @@ router.post("/set/activate/:id", authentification, checkAdmin, (request, respons
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while activating train !",
             error: 1,
             error_message: error,
@@ -171,7 +171,7 @@ router.post("/set/deactivate/:id", authentification, checkAdmin, (request, respo
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while deactivating train !",
             error: 1,
             error_message: error,

@@ -29,7 +29,7 @@ describe("User registration and login", () => {
     expect(response).to.have.status(201);
     expect(response.body).to.have.property(
       "message",
-      "User registered successfully !"
+      "User registered successfully !" // checker l'erreur et pas le message directement
     );
     expect(response.body).to.have.property("error", 0);
   });

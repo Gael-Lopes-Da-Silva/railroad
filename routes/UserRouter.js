@@ -43,7 +43,7 @@ router.post("/register", (request, response) => {
     const { error } = userSchema.validate(userInput);
 
     if (error) {
-        return response.status(400).json({
+        return response.status(404).json({
             message: "Something went wrong while registering user !",
             error: 1,
             error_message: error,
@@ -56,7 +56,7 @@ router.post("/register", (request, response) => {
             error: 0,
         });
     }).catch((error) => {
-        response.status(400).json({
+        response.status(500).json({
             message: "Something went wrong while registering user !",
             error: 1,
             error_message: error,
@@ -102,7 +102,7 @@ router.post("/login", (request, response) => {
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while logging user !",
             error: 1,
             error_message: error,
@@ -118,7 +118,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
             error: 0,
         });
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching users !",
             error: 1,
             error_message: error,
@@ -142,7 +142,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while fetching user !",
             error: 1,
             error_message: error,
@@ -165,7 +165,7 @@ router.post("/update", authentification, (request, response) => {
     const { error } = userSchema.validate(userInput);
 
     if (error) {
-        return response.status(400).json({
+        return response.status(404).json({
             message: "Something went wrong while updating user !",
             error: 1,
             error_message: error,
@@ -174,7 +174,7 @@ router.post("/update", authentification, (request, response) => {
     
     updateUser(request).then((user) => {
         if (user) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "User updated successfully !",
                 error: 0,
             });
@@ -186,7 +186,7 @@ router.post("/update", authentification, (request, response) => {
             }); 
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while updating user !",
             error: 1,
             error_message: error,
@@ -209,7 +209,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
     const { error } = userSchema.validate(userInput);
 
     if (error) {
-        return response.status(400).json({
+        return response.status(404).json({
             message: "Something went wrong while updating user !",
             error: 1,
             error_message: error,
@@ -230,7 +230,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
             }); 
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Something went wrong while updating user !",
             error: 1,
             error_message: error,
@@ -241,7 +241,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 router.post("/delete", authentification, (request, response) => {
     deleteUser(request).then((user) => {
         if (user) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "User deleted successfully !",
                 error: 0,
             });
@@ -253,7 +253,7 @@ router.post("/delete", authentification, (request, response) => {
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Somehting went wrong while deleting user !",
             error: 1,
             error_message: error,
@@ -264,7 +264,7 @@ router.post("/delete", authentification, (request, response) => {
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteUser(request).then((user) => {
         if (user) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "User deleted successfully !",
                 error: 0,
             });
@@ -276,7 +276,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Somehting went wrong while deleting user !",
             error: 1,
             error_message: error,
@@ -287,7 +287,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
 router.post("/set/admin/:id", authentification, checkAdmin, (request, response) => {
     setAdmin(request).then((user) => {
         if (user) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "Role changed to admin successfully !",
                 error: 0,
             });
@@ -299,7 +299,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Somehting went wrong while seting user role to admin !",
             error: 1,
             error_message: error,
@@ -310,7 +310,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
 router.post("/set/employee/:id", authentification, checkAdmin, (request, response) => {
     setEmployee(request).then((user) => {
         if (user) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "Role changed to employee successfully !",
                 error: 0,
             });
@@ -322,7 +322,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Somehting went wrong while seting user role to employee !",
             error: 1,
             error_message: error,
@@ -333,7 +333,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
 router.post("/set/user/:id", authentification, checkAdmin, (request, response) => {
     setUser(request).then((user) => {
         if (user) {
-            response.status(202).json({
+            response.status(200).json({
                 message: "Role changed to user successfully !",
                 error: 0,
             });
@@ -345,7 +345,7 @@ router.post("/set/user/:id", authentification, checkAdmin, (request, response) =
             });
         }
     }).catch((error) => {
-        response.status(404).json({
+        response.status(500).json({
             message: "Somehting went wrong while seting user role to user !",
             error: 1,
             error_message: error,
