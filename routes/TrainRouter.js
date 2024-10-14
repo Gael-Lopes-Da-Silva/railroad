@@ -108,6 +108,7 @@ const router = express.Router();
  *                   example: ...
  */
 router.post("/create", authentification, checkAdmin, (request, response) => {
+    // we try to create the train with the given body fields
     createTrain(request).then((train) => {
         if (train) {
             response.status(201).json({
@@ -209,6 +210,8 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   example: ...
  */
 router.post("/get",(request, response) => {
+    // we try to get all the trains
+    // we can use queries like sort or limit to sort output
     getAllTrains(request).then((trains) => {
         response.status(202).json({
             message: "Trains fetched successfully !",
@@ -324,6 +327,7 @@ router.post("/get",(request, response) => {
  *                   example: ...
  */
 router.post("/get/:id", (request, response) => {
+    // we try to get the train with the given id
     getTrain(request).then((train) => {
         if (train) {
             response.status(202).json({
@@ -363,7 +367,7 @@ router.post("/get/:id", (request, response) => {
  *         schema:
  *           type: string
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -437,8 +441,9 @@ router.post("/get/:id", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
+    // we try to update the train with the given id and body fields
+    // not all fields are required !
     updateTrain(request).then((train) => {
         if (train) {
             response.status(202).json({
@@ -524,6 +529,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   example: ...
  */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+    // we try to delete the train of the given id
     deleteTrain(request).then((train) => {
         if (train) {
             response.status(202).json({
@@ -609,6 +615,8 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *                   example: ...
  */
 router.post("/set/activate/:id", authentification, checkAdmin, (request, response) => {
+    // we try to activate the train of the given id
+    // do nothing if the train is already activated
     activateTrain(request).then((train) => {
         if (train) {
             response.status(202).json({
@@ -694,6 +702,8 @@ router.post("/set/activate/:id", authentification, checkAdmin, (request, respons
  *                   example: ...
  */
 router.post("/set/deactivate/:id", authentification, checkAdmin, (request, response) => {
+    // we try to deactivate the train of the given id
+    // do nothing if the train is already deactivated
     deactivateTrain(request).then((train) => {
         if (train) {
             response.status(202).json({

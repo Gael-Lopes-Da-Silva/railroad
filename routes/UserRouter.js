@@ -6,7 +6,7 @@
  */
 import express from "express";
 import jsonwebtoken from "jsonwebtoken";
-import dotenv from "dotenv/config";
+import dotenv from "dotenv/config"; // populate process.end with what's inside .env
 import joi from "joi";
 
 import {
@@ -111,6 +111,7 @@ router.post("/register", (request, response) => {
         password: request.body.password,
     };
 
+    // we check if the user input are valid
     const { error } = userSchema.validate(userInput);
 
     if (error) {
@@ -121,6 +122,7 @@ router.post("/register", (request, response) => {
         });
     }
     
+    // we try to create the user
     createUser(request).then(() => {
         response.status(201).json({
             message: "User registered successfully !",
@@ -216,7 +218,8 @@ router.post("/login", (request, response) => {
         email: request.body.email,
         password: request.body.password,
     };
-
+    
+    // we check if the user input are valid
     const { error } = userSchema.validate(userInput);
 
     if (error) {
@@ -227,10 +230,11 @@ router.post("/login", (request, response) => {
         });
     }
     
+    // we try to login user
     login(request).then((user) => {
         if (user) {
-            const secret = process.env.SECRET;
-            const token = jsonwebtoken.sign({ id: user.id }, secret, { expiresIn: "24h" });
+            const secret = process.env.SECRET; // get secret key from .env
+            const token = jsonwebtoken.sign({ id: user.id }, secret, { expiresIn: "24h" }); // create the token with the user id inside
 
             response.status(200).json({
                 message: "User logged successfully !",
@@ -310,8 +314,9 @@ router.post("/login", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-
 router.post("/get", authentification, checkEmployee, (request, response) => {
+    // we try to get all users
+    // we can use queries like sort or limit to sort output
     getAllUsers(request).then((users) => {
         response.status(202).json({
             message: "Users fetched successfully !",
@@ -405,6 +410,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   example: ...
  */
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
+    // we try to get user by the given id
     getUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -474,9 +480,10 @@ router.post("/update", authentification, (request, response) => {
         email: request.body.email,
         password: request.body.password,
     };
-
+    
+    // we check if the user input are valid
     const { error } = userSchema.validate(userInput);
-
+    
     if (error) {
         return response.status(404).json({
             message: "Something went wrong while updating user !",
@@ -485,6 +492,8 @@ router.post("/update", authentification, (request, response) => {
         });
     }
     
+    // we try to update the user with the given body fields
+    // not all fields are required !
     updateUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -560,7 +569,8 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
         email: request.body.email,
         password: request.body.password,
     };
-
+    
+    // we check if the user input are valid
     const { error } = userSchema.validate(userInput);
 
     if (error) {
@@ -571,6 +581,8 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
         });
     }
     
+    // we try to update the user of the given id with the given body fields
+    // not all fields are required !
     updateUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -648,8 +660,8 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-
 router.post("/delete", authentification, (request, response) => {
+    // we try to delete user
     deleteUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -735,6 +747,7 @@ router.post("/delete", authentification, (request, response) => {
  *                   example: ...
  */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+    // we try to delete user of the given id
     deleteUser(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -792,6 +805,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *         description: Something went wrong while setting user role to admin
  */
 router.post("/set/admin/:id", authentification, checkAdmin, (request, response) => {
+    // we try to set to admin the role of the user of the given id
     setAdmin(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -849,6 +863,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
  *         description: Something went wrong while setting user role to employee
  */
 router.post("/set/employee/:id", authentification, checkAdmin, (request, response) => {
+    // we try to set to employee the role of the user of the given id
     setEmployee(request).then((user) => {
         if (user) {
             response.status(202).json({
@@ -905,8 +920,8 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
  *       500:
  *         description: Something went wrong while setting user role
  */
-
 router.post("/set/user/:id", authentification, checkAdmin, (request, response) => {
+    // we try to set to user the role of the user of the given id
     setUser(request).then((user) => {
         if (user) {
             response.status(202).json({

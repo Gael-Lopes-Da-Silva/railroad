@@ -1,13 +1,14 @@
 import jsonwebtoken from "jsonwebtoken";
-import dotenv from "dotenv/config";
+import dotenv from "dotenv/config"; // populate process.end with what's inside .env
 
 export function authentification(request, response, next) {
     let token = "";
     
+    // we try to read token from headers with and without Bearer in front
     if (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer') {
-        token = request.headers.authorization.split(' ')[1];
+        token = request.headers.authorization.split(' ')[1]; // remove Bearer and read the token
     } else {
-        token = request.headers.authorization;
+        token = request.headers.authorization; // read the token
     }
 
     if (token == "" || token == null) {
@@ -18,6 +19,7 @@ export function authentification(request, response, next) {
         });
     }
 
+    // we get the secret key from .env
     const secret = process.env.SECRET;
 
     jsonwebtoken.verify(token, secret, (error, user) => {
@@ -27,7 +29,7 @@ export function authentification(request, response, next) {
             error_message: error,
         });
 
-        request.user = user;
-        next();
+        request.user = user; // after verifying the token, we put the user id inside request.user
+        next(); // the we continue
     });
 }

@@ -76,8 +76,8 @@ const router = express.Router();
  *                   type: object
  *                   example: ...
  */
-
 router.post("/create", authentification, checkAdmin, (request, response) => {
+    // we try to create trainstation with the given fields in body
     createTrainstation(request).then(() => {
         response.status(201).json({
             message: "Trainstation created successfully !",
@@ -147,6 +147,8 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   example: ...
  */
 router.post("/get", (request, response) => {
+    // we try to get all trainstations
+    // we can use queries like sort or limit to sort output
     getAllTrainstations(request).then((trainstations) => {
         response.status(202).json({
             message: "Trainstations fetched successfully !",
@@ -238,6 +240,7 @@ router.post("/get", (request, response) => {
  *                   example: ...
  */
 router.post("/get/:id", (request, response) => {
+    // we try to get the traistation of the given id
     getTrainstation(request).then((trainstation) => {
         if (trainstation) {
             response.status(202).json({
@@ -277,7 +280,7 @@ router.post("/get/:id", (request, response) => {
  *         schema:
  *           type: string
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -339,6 +342,8 @@ router.post("/get/:id", (request, response) => {
  *                   example: ...
  */
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
+    // we try to update the trainstation of the given id with the given filds in the body
+    // not all fields are required !
     updateTrainstation(request).then((trainstation) => {
         if (trainstation) {
             response.status(202).json({
@@ -424,6 +429,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   example: ...
  */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+    // try to delete user of the given id
     deleteTrainstation(request).then((trainstation) => {
         if (trainstation) {
             response.status(202).json({

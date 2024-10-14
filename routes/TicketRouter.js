@@ -91,6 +91,8 @@ const router = express.Router();
  *                   example: ...
  */
 router.post("/book", authentification, (request, response) => {
+    // we try to create a ticket with the given body fields
+    // creating/booking a ticket link a valid train an valid user togheter
     createTicket(request).then((ticket) => {
         if (ticket) {
             response.status(201).json({
@@ -175,6 +177,8 @@ router.post("/book", authentification, (request, response) => {
  *                   example: ...
  */
 router.post("/get", authentification, checkEmployee, (request, response) => {
+    // we try to get all tickets
+    // we can use queries like sort or limit to sort output
     getAllTickets(request).then((tickets) => {
         response.status(202).json({
             message: "Tickets fetched successfully !",
@@ -273,6 +277,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   example: ...
  */
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
+    // we try to get a ticket with the given id
     getTicket(request).then((ticket) => {
         if (ticket) {
             response.status(202).json({
@@ -379,6 +384,8 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *                   example: ...
  */
 router.post("/validate/:id", authentification, checkEmployee, (request, response) => {
+    // we try to validate a ticket
+    // validating a ticket put the date in validatedAt field
     validateTicket(request).then((ticket) => {
         if (ticket) {
             response.status(202).json({
