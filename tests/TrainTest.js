@@ -13,7 +13,8 @@ const expect = chai.expect;
 describe("Tests for Train", () => {
   let userAdmin = {};
   let trainTest = {};
-
+  let trainstationDepartureTest = {};
+  let trainsationArrivalTest = {};
   let token = "";
 
   before(async () => {
@@ -30,27 +31,46 @@ describe("Tests for Train", () => {
     });
 
     token = response.body.token;
+
+    trainstationDepartureTest = await TrainstationModel.create({
+      name: "Perpignan",
+      open_hour: "06:00",
+      close_hour: "22:45",
+      image:
+        "2JqBZv+zHtP9LfPmzNZ/CkBDTupH8YKKv8YJzZ2bLrfQPwUdrpLNQwDc4Gp8ysYZJ2XY5aQ9ab7oLRXXpGRL1fnfZKqW93OPJDf",
+    });
+
+    trainsationArrivalTest = await TrainstationModel.create({
+      name: "Toulouse",
+      open_hour: "05:00",
+      close_hour: "23:45",
+      image:
+        "2JqBZv+zHtP9LfPmzNZ/CkfeaupH8YKKv8YJzZ2bLrfQPwUdrpLNQwDc4Gp8ysYZJ2XY5aQ9ab7oLRXXpGRL1fnfZKqW93OPJDf",
+    });
   });
 
   it("Create train", async () => {
-    // Get ObjectId from existing trainsations
-    const startStation = await TrainstationModel.findOne({ name: "Paris" });
-    const endStation = await TrainstationModel.findOne({ name: "Versailles" });
+    trainstationDepartureTest = await TrainstationModel.findOne({
+      name: "Perpignan",
+    });
+    trainsationArrivalTest = await TrainstationModel.findOne({
+      name: "Toulouse",
+    });
     const response = await chai
       .request(app)
       .post("/trains/create")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        name: "Ligne Paris-Versailles",
-        start_station: startStation._id,
-        end_station: endStation._id,
+        name: "Ligne Perpignan-Toulouse",
+        start_station: trainstationDepartureTest._id,
+        end_station: trainsationArrivalTest._id,
         departure_time: new Date(),
       });
 
     expect(response).to.have.status(201);
     expect(response.body).to.have.property("error", 0);
 
-    trainTest = await TrainModel.findOne({ name: "Ligne Paris-Versailles" });
+    trainTest = await TrainModel.findOne({ name: "Ligne Perpignan-Toulouse" });
     expect(trainTest).to.not.be.null;
   });
 
@@ -82,14 +102,14 @@ describe("Tests for Train", () => {
       .post(`/trains/update/${trainTest.id}`)
       .set("Authorization", `Bearer ${token}`)
       .send({
-        name: "Ligne Paris-Versailles-Orléans",
+        name: "Ligne Perpignan-Toulouse-Bordeaux",
       });
 
     expect(response).to.have.status(202);
     expect(response.body).to.have.property("error", 0);
 
     const test = await TrainModel.findOne({
-      name: "Ligne Paris-Versailles-Orléans",
+      name: "Ligne Perpignan-Toulouse-Bordeaux",
     });
 
     expect(test.name).to.not.equal(trainTest.name);
@@ -105,8 +125,9 @@ describe("Tests for Train", () => {
     expect(response).to.have.status(202);
     expect(response.body).to.have.property("error", 0);
   });
-  
+
   after(async () => {
     await UserModel.findByIdAndDelete(userAdmin.id);
+    await TrainModel.findByIdAndDelete()
   });
 });
