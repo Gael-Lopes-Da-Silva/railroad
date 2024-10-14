@@ -3,32 +3,32 @@ import TrainstationModel from "../models/TrainstationModel.js";
 import TrainModel from "../models/TrainModel.js";
 
 export function createTrainstation(request) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // check if file is here
-        if (!request.file) {
-          return reject("No image file uploaded!");
-        }
-  
-        // resize that image to 200x200 pixels
-        const resizedImageBuffer = await sharp(request.file.buffer)
-          .resize(200, 200, { fit: "cover" })
-          .toBuffer();
-  
-        await TrainstationModel.create({
-          name: request.body.name,
-          open_hour: request.body.open_hour,
-          close_hour: request.body.close_hour,
-          image: resizedImageBuffer,
-        });
-  
-        resolve(); 
-      } catch (error) {
-        console.error("Error details:", error);
-        reject(error.message);
+  return new Promise(async (resolve, reject) => {
+    try {
+      // check if file is here
+      if (!request.file) {
+        return reject("No image file uploaded!");
       }
-    });
-  }
+
+      // resize that image to 200x200 pixels
+      const resizedImageBuffer = await sharp(request.file.buffer)
+        .resize(200, 200, { fit: "cover" })
+        .toBuffer();
+
+      await TrainstationModel.create({
+        name: request.body.name,
+        open_hour: request.body.open_hour,
+        close_hour: request.body.close_hour,
+        image: resizedImageBuffer,
+      });
+
+      resolve();
+    } catch (error) {
+      console.error("Error details:", error);
+      reject(error.message);
+    }
+  });
+}
 
 export async function getAllTrainstations(request) {
   const sortQuery = request.query.sort ? request.query.sort.split(",") : []; // we get the sort query if set
