@@ -1,106 +1,112 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
-import app from "../server.js";
-import User from "../routes/UserRouter.js";
-import UserModel from "../models/UserModel.js";
 import bcrypt from "bcrypt";
-import { deleteUser } from "../controllers/UserController.js";
+import app from "../server.js";
+
+import UserModel from "../models/UserModel.js";
 
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-let userCreds;
-let userToken;
-let normalUserId;
+describe("Tests for User", () => {
+    let userAdmin = {};
+    let userTest = {};
 
-let adminUser;
-let adminToken;
-let adminUserId;
+    let token = "";
 
-// create / log / get / getid / update / updateid / delete / deleteid
-before(async () => {
-  userCreds = {
-    pseudo: "TestUser1",
-    email: "testuser@example.com",
-    password: "Password123",
-  };
+    before(async () => {
+        userAdmin = await UserModel.create({
+            pseudo: "admin",
+            password: bcrypt.hashSync("admin123", 10),
+            email: "admin@example.com",
+            role: "admin",
+        });
+    });
 
-  adminUser = await UserModel.create({
-    pseudo: "AdminUser1",
-    password: bcrypt.hashSync("AdminPassword123", 10),
-    email: "adminuser@example.com",
-    role: "admin",
-  });
-});
+    it("Register user", async () => {
+        const response = await chai
+            .request(app)
+            .post("/users/register")
+            .send({
+                pseudo: "test",
+                email: "test@example.com",
+                password: "test1234",
+            });
 
-describe("User registration and login", () => {
-  it("Should register a new user", async () => {
-    const response = await chai
-      .request(app)
-      .post("/users/register")
-      .send(userCreds);
+        expect(response).to.have.status(201);
+        expect(response.body).to.have.property("error", 0);
 
-    expect(response).to.have.status(201);
-    expect(response.body).to.have.property("error", 0);
-  });
+        userTest = await UserModel.findOne({ email: "test@example.com" });
+    });
 
-  it("Should login an user and set the token linked to", async () => {
-    const response = await chai
-      .request(app)
-      .post("/users/login")
-      .send(userCreds);
+    it("Login user", async () => {
+        const response = await chai
+            .request(app)
+            .post("/users/login")
+            .send({
+                email: "admin@example.com",
+                password: "admin123",
+            });
 
-    expect(response).to.have.status(200);
-    expect(response.body).to.have.property("error", 0);
-    expect(response.body).to.have.property("token").that.is.a("string"); // check is the token is here and a string
+        expect(response).to.have.status(200);
+        expect(response.body).to.have.property("error", 0);
+        expect(response.body).to.have.property("token").that.is.a("string");
 
-    userToken = response.body.token;
-    normalUserId = response.body._id;
-  });
-});
+        token = response.body.token;
+    });
 
-describe("Admin registration and login", () => {
-  it("Should login as admin", async () => {
-    const response = await chai
-      .request(app)
-      .post(`/users/login`)
-      .send({ email: "adminuser@example.com", password: "AdminPassword123" });
+    it("Get users", async () => {
+        const response = await chai
+            .request(app)
+            .post("/users/get")
+            .set("Authorization", `Bearer ${token}`)
+            .send();
 
-    expect(response).to.have.status(200);
-    expect(response.body).to.have.property("error", 0);
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
 
-    adminToken = response.body.token;
-  });
+    it("Get user by id", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/get/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
 
-  it("Should update another user's role to admin", async () => {
-    const response = await chai
-      .request(app)
-      .post(`/users/set/admin/${normalUserId}`)
-      .set("Authorization", `Bearer ${adminToken}`)
-      .send({ role: "admin" });
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
 
-    console.log(response.body);
+    it("Update user self", async () => {
+        const response = await chai
+            .request(app)
+            .post("/users/update")
+            .set("authorization", `Bearer ${token}`)
+            .send({
+                pseudo: "adminAfterUpdate",
+                email: "adminAfterUpdate@example.com",
+            });
 
-    expect(response).to.have.status(202);
-    expect(response.body).to.have.property("error", 0);
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
 
-    const updatedUser = await UserModel.findById(normalUserId);
-    expect(updatedUser.role).to.equal("admin"); // Check if user is updated as admin in DB
-  });
-});
+    it("Update user by id", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/update/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send({
+                pseudo: "testAfterUpdate",
+                email: "testAfterUpdate@example.com",
+            });
+        
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
 
-/* describe("User entity tests", () => {
-  it("Should get the user", async () => {
-    const response = await chai
-      .request(app)
-      .get(`/users/get/${normalUserId}`)
-      .set("authorization", `Bearer ${userToken}`);
-
-    expect(response).to.have.status(202);
-    expect(response.body).to.have.property("error", 0);
-  });
-}); */
-
-after(async () => {
-  await deleteUser({ params: { id: adminUserId } });
+    after(async () => {
+        await UserModel.findByIdAndDelete(userAdmin.id);
+        await UserModel.findByIdAndDelete(userTest.id);
+    });
 });
