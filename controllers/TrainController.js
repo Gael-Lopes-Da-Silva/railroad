@@ -4,11 +4,11 @@ import TrainstationModel from "../models/TrainstationModel.js";
 export async function createTrain(request) {
     const start_station = TrainstationModel.findById(request.body.start_station, { deletedAt: null });
     const end_station = TrainstationModel.findById(request.body.end_station, { deletedAt: null });
-    
+
     if (!start_station || !end_station) {
         return null;
     }
-    
+
     return await TrainModel.create({
         name: request.body.name,
         start_station: request.body.start_station,
@@ -24,7 +24,7 @@ export async function getAllTrains(request) {
 
     if (sortQuery.length > 0) {
         let sortOptions = [];
-        
+
         sortQuery.forEach((element) => {
             let sortOrder = 1;
 
@@ -46,7 +46,7 @@ export async function getAllTrains(request) {
     if (limitQuery > 0) {
         trains.limit(limitQuery);
     }
-    
+
     return await trains;
 }
 

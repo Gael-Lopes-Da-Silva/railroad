@@ -11,29 +11,17 @@ export async function createUser(request) {
 }
 
 export async function updateUser(request) {
-    if (request.params.id) {
-        return await UserModel.findByIdAndUpdate(request.params.id, {
-            pseudo: request.body.pseudo,
-            password: bcrypt.hashSync(request.body.password, 10),
-            email: request.body.email,
-        });
-    }
-
-    return await UserModel.findByIdAndUpdate(request.user.id, {
-        pseudo: request.body.pseudo,
-        password: bcrypt.hashSync(request.body.password, 10),
-        email: request.body.email,
+    let user = UserModel.findById(request.params.id ? request.params.id : request.user.id);
+    
+    return await UserModel.findByIdAndUpdate(request.params.id ? request.params.id : request.user.id, {
+        pseudo: request.body.pseudo ? request.body.pseudo : user.pseudo,
+        password: request.body.password ? bcrypt.hashSync(request.body.password, 10) : user.password,
+        email: request.body.email ? request.body.email : user.email,
     });
 }
 
-export async function deleteUser(request) {
-    if (request.params.id) {
-        return await UserModel.findByIdAndUpdate(request.params.id, {
-            deletedAt: Date.now(),
-        });
-    }
-    
-    return await UserModel.findByIdAndUpdate(request.user.id, {
+export async function deleteUser(request) {    
+    return await UserModel.findByIdAndUpdate(request.params.id ? request.params.id : request.user.id, {
         deletedAt: Date.now(),
     });
 }
