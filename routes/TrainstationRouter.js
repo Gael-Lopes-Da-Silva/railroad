@@ -19,6 +19,7 @@ import {
 import { authentification } from "../middlewares/Authentification.js";
 import { checkAdmin } from "../middlewares/CheckAdmin.js";
 import { checkEmployee } from "../middlewares/CheckEmployee.js";
+import upload from '../middlewares/upload.js';
 
 const router = express.Router();
 
@@ -76,7 +77,7 @@ const router = express.Router();
  *                   type: object
  *                   example: ...
  */
-router.post("/create", authentification, checkAdmin, (request, response) => {
+router.post("/create", authentification, checkAdmin, upload.single('image'), (request, response) => {
     // we try to create trainstation with the given fields in body
     createTrainstation(request).then(() => {
         response.status(201).json({
