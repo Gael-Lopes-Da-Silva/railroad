@@ -34,7 +34,7 @@ export async function getAllTrains(request) {
             }
 
             if (["name", "start_station", "end_station", "departure_time", "active"].includes(element)) {
-                sortOptions.push([element, sortOptions]);
+                sortOptions.push([element, sortOrder]);
             }
         });
 
