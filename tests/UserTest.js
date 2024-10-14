@@ -9,13 +9,10 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 describe("Tests for User", () => {
-    let userAdmin = {};
-    let userTest = {};
-
     let token = "";
 
     before(async () => {
-        userAdmin = await UserModel.create({
+        await UserModel.create({
             pseudo: "admin",
             password: bcrypt.hashSync("admin123", 10),
             email: "admin@example.com",
@@ -35,8 +32,6 @@ describe("Tests for User", () => {
 
         expect(response).to.have.status(201);
         expect(response.body).to.have.property("error", 0);
-
-        userTest = await UserModel.findOne({ email: "test@example.com" });
     });
 
     it("Login user", async () => {
@@ -67,12 +62,53 @@ describe("Tests for User", () => {
     });
 
     it("Get user by id", async () => {
+        const userTest = await UserModel.findOne({ email: "test@example.com" });
+
         const response = await chai
             .request(app)
             .post(`/users/get/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
+
+    it("Set user role to admin by id", async () => {
+        const userTest = await UserModel.findOne({ email: "test@example.com" });
+        
+        const response = await chai
+            .request(app)
+            .post(`/users/set/admin/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+        
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
+
+    it("Set user role to employee by id", async () => {
+        const userTest = await UserModel.findOne({ email: "test@example.com" });
+        
+        const response = await chai
+            .request(app)
+            .post(`/users/set/employee/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+        
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
+
+    it("Set user role to user by id", async () => {
+        const userTest = await UserModel.findOne({ email: "test@example.com" });
+        
+        const response = await chai
+            .request(app)
+            .post(`/users/set/user/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+        
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
     });
@@ -92,6 +128,8 @@ describe("Tests for User", () => {
     });
 
     it("Update user by id", async () => {
+        const userTest = await UserModel.findOne({ email: "test@example.com" });
+        
         const response = await chai
             .request(app)
             .post(`/users/update/${userTest.id}`)
@@ -105,7 +143,38 @@ describe("Tests for User", () => {
         expect(response.body).to.have.property("error", 0);
     });
 
+    // it("Delete user self", async () => {
+    //     const response = await chai
+    //         .request(app)
+    //         .post("/users/update")
+    //         .set("authorization", `Bearer ${token}`)
+    //         .send({
+    //             pseudo: "adminAfterUpdate",
+    //             email: "adminAfterUpdate@example.com",
+    //         });
+
+    //     expect(response).to.have.status(202);
+    //     expect(response.body).to.have.property("error", 0);
+    // });
+
+    // it("Delete user by id", async () => {
+    //     const response = await chai
+    //         .request(app)
+    //         .post(`/users/update/${userTest.id}`)
+    //         .set("authorization", `Bearer ${token}`)
+    //         .send({
+    //             pseudo: "testAfterUpdate",
+    //             email: "testAfterUpdate@example.com",
+    //         });
+        
+    //     expect(response).to.have.status(202);
+    //     expect(response.body).to.have.property("error", 0);
+    // });
+
     after(async () => {
+        const userAdmin = await UserModel.findOne({ email: "adminAfterUpdate@example.com" });
+        const userTest = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
+        
         await UserModel.findByIdAndDelete(userAdmin.id);
         await UserModel.findByIdAndDelete(userTest.id);
     });

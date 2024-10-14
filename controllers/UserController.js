@@ -26,8 +26,8 @@ export async function deleteUser(request) {
     });
 }
 
-export async function getUser(request) {
-	return await UserModel.findById(request.params.id, null, { deletedAt: null });
+export async function getUser(id) {
+	return await UserModel.findById(id, null, { deletedAt: null });
 }
 
 export async function getAllUsers() {

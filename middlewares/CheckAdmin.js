@@ -1,9 +1,7 @@
 import { getUser } from "../controllers/UserController.js";
 
 export function checkAdmin(request, response, next) {
-    request.params.id = request.user.id;
-    
-    getUser(request).then((user) => {
+    getUser(request.user.id).then((user) => {
         if (!user) {
             return response.status(403).json({
                 message: "Something went wrong while checking permissions !",

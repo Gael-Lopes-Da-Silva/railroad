@@ -404,7 +404,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   example: ...
  */
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
-    getUser(request).then((user) => {
+    getUser(request.params.id).then((user) => {
         if (user) {
             response.status(202).json({
                 message: "User fetched successfully !",
