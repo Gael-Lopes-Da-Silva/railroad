@@ -310,7 +310,6 @@ router.post("/login", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-
 router.post("/get", authentification, checkEmployee, (request, response) => {
     getAllUsers().then((users) => {
         response.status(202).json({
@@ -450,7 +449,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *               email:
  *                 type: string
  *                 description: The new email address for the user
- *                 example: "user@example.com"
+ *                 example: "newuser@example.com"
  *               password:
  *                 type: string
  *                 description: The new password for the user
@@ -458,10 +457,49 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *     responses:
  *       202:
  *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User updated successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
  *       404:
  *         description: Cannot find user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while updating user !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find user !"
  *       500:
  *         description: Something went wrong while updating user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while updating user !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: object
+ *                   example: ...
  */
 router.post("/update", authentification, (request, response) => {
     const userSchema = joi.object({
@@ -511,7 +549,7 @@ router.post("/update", authentification, (request, response) => {
  * @swagger
  * /users/update/{id}:
  *   post:
- *     summary: Update user by id
+ *     summary: Update user by ID
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
@@ -519,7 +557,7 @@ router.post("/update", authentification, (request, response) => {
  *       - name: id
  *         in: path
  *         required: true
- *         description: User id
+ *         description: User ID to update
  *         schema:
  *           type: string
  *     requestBody:
@@ -535,19 +573,58 @@ router.post("/update", authentification, (request, response) => {
  *                 example: "newPseudo"
  *               email:
  *                 type: string
- *                 description: The new email adresse for the user
- *                 example: "user@example.com"
+ *                 description: The new email address for the user
+ *                 example: "newuser@example.com"
  *               password:
  *                 type: string
  *                 description: The new password for the user
- *                 example: "newPassword"
+ *                 example: "newPassword123"
  *     responses:
  *       202:
  *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User updated successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
  *       404:
  *         description: Cannot find user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while updating user !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find user !"
  *       500:
- *         description: Something went wrong while updating user
+ *         description: Internal server error while updating user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while updating user !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: object
+ *                   example: ...
  */
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     const userSchema = joi.object({
@@ -648,7 +725,6 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-
 router.post("/delete", authentification, (request, response) => {
     deleteUser(request).then((user) => {
         if (user) {
@@ -761,7 +837,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  * @swagger
  * /set/admin/{id}:
  *   post:
- *     summary: Update the role of an user to admin by ID
+ *     summary: Update the role of a user to admin by ID
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
@@ -769,7 +845,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *       - name: id
  *         in: path
  *         required: true
- *         description: User ID
+ *         description: User ID to be updated to admin
  *         schema:
  *           type: string
  *     requestBody:
@@ -781,15 +857,54 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *             properties:
  *               role:
  *                 type: string
- *                 description: New role for the user (set to "admin")
+ *                 description: New role for the user (must be set to "admin")
  *                 example: "admin"
  *     responses:
  *       202:
  *         description: Role changed to admin successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Role changed to admin successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
  *       404:
  *         description: Cannot find user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while setting user role to admin !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find user !"
  *       500:
- *         description: Something went wrong while setting user role to admin
+ *         description: Internal server error while setting user role to admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while setting user role to admin !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: object
+ *                   example: ...
  */
 router.post("/set/admin/:id", authentification, checkAdmin, (request, response) => {
     setAdmin(request).then((user) => {
@@ -826,7 +941,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
  *       - name: id
  *         in: path
  *         required: true
- *         description: User ID
+ *         description: User ID to be updated to employee
  *         schema:
  *           type: string
  *     requestBody:
@@ -838,15 +953,54 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
  *             properties:
  *               role:
  *                 type: string
- *                 description: New role for the user (set to "employee")
+ *                 description: New role for the user (must be set to "employee")
  *                 example: "employee"
  *     responses:
  *       202:
  *         description: Role changed to employee successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Role changed to employee successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
  *       404:
  *         description: Cannot find user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while setting user role to employee !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find user !"
  *       500:
- *         description: Something went wrong while setting user role to employee
+ *         description: Internal server error while setting user role to employee
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while setting user role to employee !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: object
+ *                   example: ...
  */
 router.post("/set/employee/:id", authentification, checkAdmin, (request, response) => {
     setEmployee(request).then((user) => {
@@ -875,7 +1029,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
  * @swagger
  * /set/user/{id}:
  *   post:
- *     summary: Update the role of an user by ID
+ *     summary: Update the role of a user by ID
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
@@ -883,7 +1037,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
  *       - name: id
  *         in: path
  *         required: true
- *         description: User ID
+ *         description: User ID to be updated
  *         schema:
  *           type: string
  *     requestBody:
@@ -896,16 +1050,54 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
  *               role:
  *                 type: string
  *                 description: New role for the user (e.g., "admin", "user", "employee")
- *                 example: "admin"
+ *                 example: "user"
  *     responses:
  *       202:
- *         description: Role changed to user successfully
+ *         description: Role changed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Role changed to user successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
  *       404:
  *         description: Cannot find user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while setting user role !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find user !"
  *       500:
- *         description: Something went wrong while setting user role
+ *         description: Internal server error while setting user role
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while setting user role !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: object
+ *                   example: ...
  */
-
 router.post("/set/user/:id", authentification, checkAdmin, (request, response) => {
     setUser(request).then((user) => {
         if (user) {
