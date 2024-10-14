@@ -147,7 +147,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   example: ...
  */
 router.post("/get", (request, response) => {
-    getAllTrainstations().then((trainstations) => {
+    getAllTrainstations(request).then((trainstations) => {
         response.status(202).json({
             message: "Trainstations fetched successfully !",
             trainstations: trainstations,

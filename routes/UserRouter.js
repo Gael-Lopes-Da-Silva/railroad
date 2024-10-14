@@ -312,7 +312,7 @@ router.post("/login", (request, response) => {
  */
 
 router.post("/get", authentification, checkEmployee, (request, response) => {
-    getAllUsers().then((users) => {
+    getAllUsers(request).then((users) => {
         response.status(202).json({
             message: "Users fetched successfully !",
             users: users,

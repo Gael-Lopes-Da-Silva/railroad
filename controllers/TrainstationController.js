@@ -11,8 +11,37 @@ export async function createTrainstation(request) {
     });
 }
 
-export async function getAllTrainstations() {
-    return await TrainstationModel.find({ deletedAt: null });
+export async function getAllTrainstations(request) {
+    const sortQuery = request.query.sort ? request.query.sort.split(',') : [];
+    const limitQuery = request.query.limit ? parseInt(request.query.limit) : 10;
+    let trainstations = TrainstationModel.find({ deletedAt: null });
+
+    if (sortQuery.length > 0) {
+        let sortOptions = [];
+
+        sortQuery.forEach((element) => {
+            let sortOrder = 1;
+
+            if (element.startsWith('-')) {
+                sortOrder = -1;
+                element = element.substring(1);
+            }
+
+            if (["name", "open_hour", "close_hour"].includes(element)) {
+                sortOptions.push([element, sortOrder]);
+            }
+        });
+
+        if (sortOptions.length > 0) {
+            trainstations.sort(sortOptions);
+        }
+    }
+
+    if (limitQuery > 0) {
+        trainstations.limit(limitQuery);
+    }
+    
+    return await trainstations;
 }
 
 export async function getTrainstation(request) {
