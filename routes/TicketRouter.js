@@ -175,7 +175,7 @@ router.post("/book", authentification, (request, response) => {
  *                   example: ...
  */
 router.post("/get", authentification, checkEmployee, (request, response) => {
-    getAllTickets().then((tickets) => {
+    getAllTickets(request).then((tickets) => {
         response.status(202).json({
             message: "Tickets fetched successfully !",
             tickets: tickets,

@@ -16,8 +16,37 @@ export async function createTicket(request) {
     });
 }
 
-export async function getAllTickets() {
-    return await TicketModel.find({ validateAt: null });
+export async function getAllTickets(request) {
+    const sortQuery = request.query.sort ? request.query.sort.split(',') : [];
+    const limitQuery = request.query.limit ? parseInt(request.query.limit) : 10;
+    let tickets = TicketModel.find({ validateAt: null });
+
+    if (sortQuery.length > 0) {
+        let sortOptions = [];
+
+        sortQuery.forEach((element) => {
+            let sortOrder = 1;
+
+            if (element.startsWith('-')) {
+                sortOrder = -1;
+                element = element.substring(1);
+            }
+
+            if (["name", "start_station", "end_station", "departure_time", "active"].includes(element)) {
+                sortOptions.push([element, sortOrder]);
+            }
+        });
+
+        if (sortOptions.length > 0) {
+            tickets.sort(sortOptions);
+        }
+    }
+
+    if (limitQuery > 0) {
+        tickets.limit(limitQuery);
+    }
+    
+    return await tickets;
 }
 
 export async function getTicket(request) {
