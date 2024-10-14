@@ -87,8 +87,8 @@ const router = express.Router();
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/book", authentification, (request, response) => {
     createTicket(request).then((ticket) => {
@@ -171,8 +171,8 @@ router.post("/book", authentification, (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get", authentification, checkEmployee, (request, response) => {
     getAllTickets().then((tickets) => {
@@ -269,8 +269,8 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
     getTicket(request).then((ticket) => {
@@ -375,8 +375,8 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/validate/:id", authentification, checkEmployee, (request, response) => {
     validateTicket(request).then((ticket) => {

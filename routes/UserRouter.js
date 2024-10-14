@@ -204,8 +204,8 @@ router.post("/register", (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/login", (request, response) => {
     const userSchema = joi.object({
@@ -307,8 +307,8 @@ router.post("/login", (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 
 router.post("/get", authentification, checkEmployee, (request, response) => {
@@ -401,8 +401,8 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
     getUser(request).then((user) => {
@@ -437,7 +437,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -465,9 +465,9 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  */
 router.post("/update", authentification, (request, response) => {
     const userSchema = joi.object({
-        pseudo: joi.string().alphanum().min(3).max(30).required(),
-        email: joi.string().email().max(320).required(),
-        password: joi.string().min(8).max(320).required(),
+        pseudo: joi.string().alphanum().min(3).max(30),
+        email: joi.string().email().max(320),
+        password: joi.string().min(8).max(320),
     });
     const userInput = {
         pseudo: request.body.pseudo,
@@ -523,7 +523,7 @@ router.post("/update", authentification, (request, response) => {
  *         schema:
  *           type: string
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -551,9 +551,9 @@ router.post("/update", authentification, (request, response) => {
  */
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     const userSchema = joi.object({
-        pseudo: joi.string().alphanum().min(3).max(30).required(),
-        email: joi.string().email().max(320).required(),
-        password: joi.string().min(8).max(320).required(),
+        pseudo: joi.string().alphanum().min(3).max(30),
+        email: joi.string().email().max(320),
+        password: joi.string().min(8).max(320),
     });
     const userInput = {
         pseudo: request.body.pseudo,
@@ -645,8 +645,8 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 
 router.post("/delete", authentification, (request, response) => {
@@ -731,8 +731,8 @@ router.post("/delete", authentification, (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteUser(request).then((user) => {

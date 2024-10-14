@@ -104,8 +104,8 @@ const router = express.Router();
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/create", authentification, checkAdmin, (request, response) => {
     createTrain(request).then((train) => {
@@ -205,8 +205,8 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get",(request, response) => {
     getAllTrains(request).then((trains) => {
@@ -320,8 +320,8 @@ router.post("/get",(request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get/:id", (request, response) => {
     getTrain(request).then((train) => {
@@ -434,8 +434,8 @@ router.post("/get/:id", (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
@@ -520,8 +520,8 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteTrain(request).then((train) => {
@@ -605,8 +605,8 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/set/activate/:id", authentification, checkAdmin, (request, response) => {
     activateTrain(request).then((train) => {
@@ -690,8 +690,8 @@ router.post("/set/activate/:id", authentification, checkAdmin, (request, respons
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/set/deactivate/:id", authentification, checkAdmin, (request, response) => {
     deactivateTrain(request).then((train) => {

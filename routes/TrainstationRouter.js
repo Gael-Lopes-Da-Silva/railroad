@@ -73,8 +73,8 @@ const router = express.Router();
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 
 router.post("/create", authentification, checkAdmin, (request, response) => {
@@ -143,8 +143,8 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get", (request, response) => {
     getAllTrainstations().then((trainstations) => {
@@ -234,8 +234,8 @@ router.post("/get", (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/get/:id", (request, response) => {
     getTrainstation(request).then((trainstation) => {
@@ -290,7 +290,7 @@ router.post("/get/:id", (request, response) => {
  *               location:
  *                 type: string
  *                 description: New location of the trainstation
- *                 example: "456 Elm St, Cityville"
+ *                 example: "5 place de Vaugirard, Paris"
  *     responses:
  *       202:
  *         description: Trainstation updated successfully
@@ -335,8 +335,8 @@ router.post("/get/:id", (request, response) => {
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrainstation(request).then((trainstation) => {
@@ -420,8 +420,8 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: integer
  *                   example: 1
  *                 error_message:
- *                   type: string
- *                   example: "Internal server error"
+ *                   type: object
+ *                   example: ...
  */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteTrainstation(request).then((trainstation) => {
