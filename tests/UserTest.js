@@ -75,6 +75,7 @@ describe("Tests for User", () => {
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+        expect(response.body.user._id).to.equal(userTest.id);
     });
 
     it("Set user role to admin by id", async () => {
@@ -86,6 +87,9 @@ describe("Tests for User", () => {
         
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "test@example.com" });
+        expect(test.role).to.equal("admin");
     });
 
     it("Set user role to employee by id", async () => {
@@ -97,6 +101,9 @@ describe("Tests for User", () => {
         
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "test@example.com" });
+        expect(test.role).to.equal("employee");
     });
 
     it("Set user role to user by id", async () => {
@@ -110,7 +117,6 @@ describe("Tests for User", () => {
         expect(response.body).to.have.property("error", 0);
 
         const test = await UserModel.findOne({ email: "test@example.com" });
-        console.log(test);
         expect(test.role).to.equal("user");
     });
 
