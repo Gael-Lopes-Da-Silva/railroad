@@ -20,10 +20,10 @@ export async function getTrainstation(request) {
 }
 
 export async function updateTrainstation(request) {
-    let trainstation = TrainstationModel.findById(request.params.id ? request.params.id : request.trainstation.id)
+    let trainstation = TrainstationModel.findById(request.params.id)
 
-    return await TrainstationModel.findByIdAndUpdate(request.params.id ? request.params.id : request.trainstation.id, {
-        name: request.body.name ? request.params.name : trainstation.name,
+    return await TrainstationModel.findByIdAndUpdate(request.params.id, {
+        name: request.body.name ? request.body.name : trainstation.name,
         open_hour: request.body.open_hour ? request.body.open_hour : trainstation.open_hour,
         close_hour: request.body.close_hour ? request.body.close_hour : trainstation.close_hour,
         image: request.body.image ? request.body.image : trainstation.image,

@@ -55,9 +55,9 @@ export async function getTrain(request) {
 }
 
 export async function updateTrain(request) {
-    let train = TrainModel.findById(request.params.id ? request.params.id : request.train.id)
+    let train = TrainModel.findById(request.params.id)
     
-    return await TrainModel.findByIdAndUpdate(request.params.id ? request.params.id : request.train.id, {
+    return await TrainModel.findByIdAndUpdate(request.params.id, {
         name: request.body.name ? request.body.name : train.name,
         start_station: request.body.start_station ? request.body.start_station : train.start_station,
         end_station: request.body.end_station ? request.body.end_station : train.end_station,
