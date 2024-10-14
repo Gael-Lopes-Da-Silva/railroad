@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
@@ -22,6 +22,21 @@ const swaggerDocs = swaggerJsdoc({
         url: "http://localhost:3000/",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "Add bearer token to access this route"
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      }
+    ]
   },
   apis: ["./routes/*.js"],
 });

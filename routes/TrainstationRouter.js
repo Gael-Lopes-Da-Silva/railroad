@@ -2,7 +2,7 @@
  * @swagger
  * tags:
  *   name: Trainstation
- *   description: Trainstation managment
+ *   description: Trainstation management
  */
 
 import express from "express";
@@ -22,6 +22,61 @@ import { checkEmployee } from "../middlewares/CheckEmployee.js";
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /trainstations/create:
+ *   post:
+ *     summary: Create a new trainstation
+ *     tags: [Trainstation]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the trainstation
+ *                 example: "Strasbourg Gare Centrale"
+ *               location:
+ *                 type: string
+ *                 description: Location of the trainstation
+ *                 example: "1 rue de la gare, Strasbourg"
+ *     responses:
+ *       201:
+ *         description: Trainstation created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Trainstation created successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
+ *       500:
+ *         description: Internal server error while creating trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while creating trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+
 router.post("/create", authentification, checkAdmin, (request, response) => {
     createTrainstation(request).then(() => {
         response.status(201).json({
@@ -37,6 +92,60 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
     });
 });
 
+/**
+ * @swagger
+ * /trainstations/get:
+ *   post:
+ *     summary: Retrieve all trainstations
+ *     tags: [Trainstation]
+ *     responses:
+ *       202:
+ *         description: Trainstations fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Trainstations fetched successfully !"
+ *                 trainstations:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: Unique identifier for the trainstation
+ *                         example: "61f1f2c3e5b4c71f0d6e12ab"
+ *                       name:
+ *                         type: string
+ *                         description: Name of the trainstation
+ *                         example: "Gare Montparnasse"
+ *                       location:
+ *                         type: string
+ *                         description: Location of the trainstation
+ *                         example: "17 Boulevard de Vaugirard, Paris"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
+ *       500:
+ *         description: Internal server error while fetching trainstations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while fetching trainstations !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
 router.post("/get", (request, response) => {
     getAllTrainstations().then((trainstations) => {
         response.status(202).json({
@@ -53,6 +162,81 @@ router.post("/get", (request, response) => {
     });
 });
 
+/**
+ * @swagger
+ * /trainstations/get/{id}:
+ *   post:
+ *     summary: Retrieve a specific trainstation by ID
+ *     tags: [Trainstation]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the trainstation to retrieve
+ *         schema:
+ *           type: string
+ *     responses:
+ *       202:
+ *         description: Trainstation fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Trainstation fetched successfully !"
+ *                 trainstation:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: Unique identifier for the trainstation
+ *                       example: "61f1f2c3e5b4c71f0d6e12ab"
+ *                     name:
+ *                       type: string
+ *                       description: Name of the trainstation
+ *                       example: "Gare Montparnasse"
+ *                     location:
+ *                       type: string
+ *                       description: Location of the trainstation
+ *                       example: "17 Boulevard de Vaugirard, Paris"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
+ *       404:
+ *         description: Cannot find trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while fetching trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find trainstation !"
+ *       500:
+ *         description: Internal server error while fetching trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while fetching trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
 router.post("/get/:id", (request, response) => {
     getTrainstation(request).then((trainstation) => {
         if (trainstation) {
@@ -77,6 +261,83 @@ router.post("/get/:id", (request, response) => {
     });
 });
 
+/**
+ * @swagger
+ * /trainstations/update/{id}:
+ *   post:
+ *     summary: Update a trainstation by ID
+ *     tags: [Trainstation]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the trainstation to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: New name of the trainstation
+ *                 example: "New Gare Montparnasse"
+ *               location:
+ *                 type: string
+ *                 description: New location of the trainstation
+ *                 example: "456 Elm St, Cityville"
+ *     responses:
+ *       202:
+ *         description: Trainstation updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Trainstation updated successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
+ *       404:
+ *         description: Cannot find trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while updating trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find trainstation !"
+ *       500:
+ *         description: Internal server error while updating trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while updating trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
 router.post("/update/:id", authentification, checkAdmin, (request, response) => {
     updateTrainstation(request).then((trainstation) => {
         if (trainstation) {
@@ -100,6 +361,68 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
     });
 });
 
+/**
+ * @swagger
+ * /trainstations/delete/{id}:
+ *   post:
+ *     summary: Delete a trainstation by ID
+ *     tags: [Trainstation]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the trainstation to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       202:
+ *         description: Trainstation deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Trainstation deleted successfully !"
+ *                 error:
+ *                   type: integer
+ *                   example: 0
+ *       404:
+ *         description: Cannot find trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while deleting trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Can't find trainstation !"
+ *       500:
+ *         description: Internal server error while deleting trainstation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Something went wrong while deleting trainstation !"
+ *                 error:
+ *                   type: integer
+ *                   example: 1
+ *                 error_message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteTrainstation(request).then((trainstation) => {
         if (trainstation) {
