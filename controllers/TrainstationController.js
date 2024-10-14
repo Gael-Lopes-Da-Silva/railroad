@@ -1,3 +1,4 @@
+
 import TrainstationModel from "../models/TrainstationModel.js";
 import TrainModel from "../models/TrainModel.js";
 
@@ -19,11 +20,13 @@ export async function getTrainstation(request) {
 }
 
 export async function updateTrainstation(request) {
-    return await TrainstationModel.findByIdAndUpdate(request.params.id, {
-        name: request.body.name,
-        open_hour: request.body.open_hour,
-        close_hour: request.body.close_hour,
-        image: request.body.image,
+    let trainstation = TrainstationModel.findById(request.params.id ? request.params.id : request.trainstation.id)
+
+    return await TrainstationModel.findByIdAndUpdate(request.params.id ? request.params.id : request.trainstation.id, {
+        name: request.body.name ? request.params.name : trainstation.name,
+        open_hour: request.body.open_hour ? request.body.open_hour : trainstation.open_hour,
+        close_hour: request.body.close_hour ? request.body.close_hour : trainstation.close_hour,
+        image: request.body.image ? request.body.image : trainstation.image,
     });
 }
 

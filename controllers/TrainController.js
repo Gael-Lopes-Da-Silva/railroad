@@ -55,11 +55,13 @@ export async function getTrain(request) {
 }
 
 export async function updateTrain(request) {
-    return await TrainModel.findByIdAndUpdate(request.params.id, {
-        name: request.params.name,
-        start_station: request.params.start_station,
-        end_station: request.params.end_station,
-        departure_time: request.params.departure_time,
+    let train = TrainModel.findById(request.params.id ? request.params.id : request.train.id)
+    
+    return await TrainModel.findByIdAndUpdate(request.params.id ? request.params.id : request.train.id, {
+        name: request.body.name ? request.body.name : train.name,
+        start_station: request.body.start_station ? request.body.start_station : train.start_station,
+        end_station: request.body.end_station ? request.body.end_station : train.end_station,
+        departure_time: request.body.departure_time ? request.body.departure_time : train.departure_time,
     });
 }
 
