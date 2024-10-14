@@ -70,6 +70,9 @@ describe("Tests for User", () => {
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "test@example.com" });
+        expect(test.id).to.be.equal(userTest.id);
     });
 
     it("Update user self", async () => {
@@ -99,9 +102,7 @@ describe("Tests for User", () => {
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
 
-        const test = await UserModel.findOne({
-            email: "testAfterUpdate@example.com",
-        });
+        const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
         expect(test.pseudo).to.not.equal(userTest.pseudo);
     });
 
@@ -115,9 +116,7 @@ describe("Tests for User", () => {
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
 
-        const admin = await UserModel.findOne({
-            email: "adminAfterUpdate@example.com",
-        });
+        const admin = await UserModel.findOne({ email: "adminAfterUpdate@example.com" });
         expect(admin.deletedAt).to.not.be.null;
     });
 
@@ -131,9 +130,7 @@ describe("Tests for User", () => {
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
 
-        const test = await UserModel.findOne({
-            email: "testAfterUpdate@example.com",
-        });
+        const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
         expect(test.deletedAt).to.not.be.null;
     });
 
