@@ -47,6 +47,7 @@ describe("Tests for Trainstation", () => {
         expect(response.body).to.have.property("error", 0);
 
         trainstationTest = await TrainstationModel.findOne({ name: "Paris" });
+        expect(trainstationTest).to.not.be.null;
     });
 
     it("Get trainstations", async () => {

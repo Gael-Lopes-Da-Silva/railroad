@@ -34,6 +34,7 @@ describe("Tests for User", () => {
         expect(response.body).to.have.property("error", 0);
 
         userTest = await UserModel.findOne({ email: "test@example.com" });
+        expect(userTest).to.not.be.null;
     });
 
     it("Login user", async () => {
