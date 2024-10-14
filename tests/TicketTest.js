@@ -80,8 +80,47 @@ describe("Tests for Ticket", () => {
         expect(response).to.have.status(201);
         expect(response.body).to.have.property("error", 0);
 
-        // ticketTest = await TicketModel.findOne({ train: trainTest.id });
-        // expect(ticketTest).to.not.be.null;
+        ticketTest = await TicketModel.findOne({ train: trainTest.id });
+        expect(ticketTest).to.not.be.null;
+    });
+
+    it("Get tickets", async () => {
+        const response = await chai
+            .request(app)
+            .post("/tickets/get")
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+    });
+
+    it("Get ticket by id", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/tickets/get/${ticketTest.id}`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+        
+        const test = await TicketModel.findOne({ train: trainTest.id });
+        expect(test.id).to.not.equal(userTest.id);
+    });
+
+    it("Validate ticket by id", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/tickets/validate/${ticketTest.id}`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+        
+        const test = await TicketModel.findOne({ train: trainTest.id });
+        expect(test.validatedAd).to.not.be.null;
     });
 
     after(async () => {

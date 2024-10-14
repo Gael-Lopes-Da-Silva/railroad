@@ -1,9 +1,10 @@
 /**
  * @swagger
  * tags:
- *    name: Ticket
- *    description: Ticket management
+ *   name: Ticket
+ *   description: Ticket management
  */
+
 import express from "express";
 
 import {
@@ -11,7 +12,7 @@ import {
     getAllTickets,
     getTicket,
     validateTicket,
-} from "../controllers/TicketController";
+} from "../controllers/TicketController.js";
 
 import { authentification } from "../middlewares/Authentification.js";
 import { checkAdmin } from "../middlewares/CheckAdmin.js";

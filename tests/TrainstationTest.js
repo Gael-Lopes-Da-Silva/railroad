@@ -70,6 +70,9 @@ describe("Tests for Trainstation", () => {
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+
+        const test = await TrainstationModel.findOne({ name: "Paris" });
+        expect(test.id).to.be.equal(trainstationTest.id);
     });
 
     it("Update trainsation by id", async () => {

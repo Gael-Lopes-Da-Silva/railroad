@@ -18,7 +18,7 @@ import {
 import { authentification } from "../middlewares/Authentification.js";
 import { checkAdmin } from "../middlewares/CheckAdmin.js";
 import { checkEmployee } from "../middlewares/CheckEmployee.js";
-import upload from '../middlewares/upload.js';
+import upload from '../middlewares/Uploads.js';
 
 const router = express.Router();
 
