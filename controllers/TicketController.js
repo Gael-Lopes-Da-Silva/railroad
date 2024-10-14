@@ -3,13 +3,13 @@ import TrainModel from "../models/TrainModel.js";
 import UserModel from "../models/UserModel.js";
 
 export async function createTicket(request) {
-    const user = UserModel.findById(request.body.user, { deletedAt: null });
-    const train = TrainModel.findById(request.body.train, { deletedAt: null });
+    // const user = UserModel.findById(request.body.user, null, { deletedAt: null });
+    // const train = TrainModel.findById(request.body.train, null, { deletedAt: null });
     
     // we get and check if the user and the train are valid (exists, not deleted, and active)
-    if (!user || !train) {
-        return null;
-    }
+    // if (!user || !train) {
+    //     return null;
+    // }
     
     // we create the ticket with the given body fields
     return await TicketModel.create({
