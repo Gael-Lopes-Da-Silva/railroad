@@ -84,7 +84,7 @@ describe("Tests for Trainstation", () => {
         expect(response.body).to.have.property("error", 0);
 
         const test = await TrainstationModel.findOne({ name: "Versailles" });
-        // expect(test.name).to.not.equal(trainstationTest.name);
+        expect(test.name).to.not.equal(trainstationTest.name);
     });
 
     it("Delete trainsation by id", async () => {
@@ -98,10 +98,11 @@ describe("Tests for Trainstation", () => {
         expect(response.body).to.have.property("error", 0);
 
         const test = await TrainstationModel.findOne({ name: "Versailles" });
-        // expect(test.deletedAt).to.not.be.null;
+        expect(test.deletedAt).to.not.be.null;
     });
 
     after(async () => {
         await UserModel.findByIdAndDelete(userAdmin.id);
+        await TrainstationModel.findByIdAndDelete(trainstationTest.id);
     });
 });
