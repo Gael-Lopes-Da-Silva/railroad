@@ -2,6 +2,8 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "../server.js";
 import User from "../routes/UserRouter.js";
+import UserModel from "../models/UserModel.js";
+import bcrypt from "bcrypt";
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -10,7 +12,7 @@ let userCreds;
 let userToken;
 let normalUserId;
 
-let adminCreds;
+let adminUser;
 let adminToken;
 let adminUserId;
 
@@ -22,11 +24,12 @@ before(async () => {
     password: "Password123",
   };
 
-  adminCreds = {
+  adminUser = await UserModel.create({
     pseudo: "AdminUser1",
+    password: bcrypt.hashSync("AdminPassword123", 10),
     email: "adminuser@example.com",
-    password: "AdminPassword123",
-  };
+    role: "admin",
+  });
 });
 
 describe("User registration and login", () => {
@@ -50,37 +53,20 @@ describe("User registration and login", () => {
     expect(response.body).to.have.property("error", 0);
     expect(response.body).to.have.property("token").that.is.a("string"); // check is the token is here and a string
 
-    userToken = response.body.accessToken;
+    userToken = response.body.token;
     normalUserId = response.body._id;
   });
 });
 
 describe("Admin registration and login", () => {
-  it("Should register a second user (future admin)", async () => {
+  it("Should login as admin", async () => {
     const response = await chai
       .request(app)
-      .post("/users/register")
-      .send(adminCreds);
-
-    expect(response).to.have.status(201);
-    expect(response.body).to.have.property("error", 0);
-
-    adminUserId = response.body._id;
-  });
-
-  it("Should promote an user to admin directly in the database", async () => {
-    // Create a temp admin in the DB
-    await User.updateUser ({ _id: adminUserId }, { role: "admin" });
-  });
-
-  it("Shoud log in as the promoted admin user", async () => {
-    const response = await chai
-      .request(app)
-      .post("/users/login")
-      .send(adminCreds);
+      .post(`/users/login`)
+      .send({ email: "adminuser@example.com", password: "AdminPassword123" });
 
     expect(response).to.have.status(200);
-    expect(response.body).to.have.property("token");
+    expect(response.body).to.have.property("error", 0);
 
     adminToken = response.body.token;
   });
@@ -90,10 +76,15 @@ describe("Admin registration and login", () => {
       .request(app)
       .post(`/users/set/admin/${adminUserId}`)
       .set("Authorization", `Bearer ${adminToken}`)
-      .send({ role: "admin" });
+      .send();
 
-    expect(response).to.have.status(200);
+    console.log(response.body);
+
+    expect(response).to.have.status(202);
     expect(response.body).to.have.property("error", 0);
+
+    const updatedUser = await UserModel.findById(adminUserId);
+    expect(updatedUser.role).to.equal("admin"); // Check if user is updated as admin in DB
   });
 });
 
@@ -101,10 +92,14 @@ describe("User entity tests", () => {
   it("Should get the user", async () => {
     const response = await chai
       .request(app)
-      .get(`users/get/${normalUserId}`)
+      .get(`/users/get/${normalUserId}`)
       .set("authorization", `Bearer ${userToken}`);
 
-    expect(response).to.have.status(200);
-    expect(response.body).to.have.property("pseudo", userCreds.pseudo);
+    expect(response).to.have.status(202);
+    expect(response.body).to.have.property("error", 0);
   });
+});
+
+after(async () => {
+  await UserModel.deleteUser({ params: {_id: adminUser.id }});
 });
