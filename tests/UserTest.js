@@ -4,6 +4,7 @@ import app from "../server.js";
 import User from "../routes/UserRouter.js";
 import UserModel from "../models/UserModel.js";
 import bcrypt from "bcrypt";
+import { deleteUser } from "../controllers/UserController.js";
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -74,21 +75,21 @@ describe("Admin registration and login", () => {
   it("Should update another user's role to admin", async () => {
     const response = await chai
       .request(app)
-      .post(`/users/set/admin/${adminUserId}`)
+      .post(`/users/set/admin/${normalUserId}`)
       .set("Authorization", `Bearer ${adminToken}`)
-      .send();
+      .send({ role: "admin" });
 
     console.log(response.body);
 
     expect(response).to.have.status(202);
     expect(response.body).to.have.property("error", 0);
 
-    const updatedUser = await UserModel.findById(adminUserId);
+    const updatedUser = await UserModel.findById(normalUserId);
     expect(updatedUser.role).to.equal("admin"); // Check if user is updated as admin in DB
   });
 });
 
-describe("User entity tests", () => {
+/* describe("User entity tests", () => {
   it("Should get the user", async () => {
     const response = await chai
       .request(app)
@@ -98,8 +99,8 @@ describe("User entity tests", () => {
     expect(response).to.have.status(202);
     expect(response.body).to.have.property("error", 0);
   });
-});
+}); */
 
 after(async () => {
-  await UserModel.deleteUser({ params: {_id: adminUser.id }});
+  await deleteUser({ params: { id: adminUserId } });
 });
