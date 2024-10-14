@@ -48,7 +48,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
 });
 
 router.post("/get",(request, response) => {
-    getAllTrains().then((trains) => {
+    getAllTrains(request).then((trains) => {
         response.status(202).json({
             message: "Trains fetched successfully !",
             trains: trains,
