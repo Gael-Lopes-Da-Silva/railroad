@@ -98,7 +98,7 @@ describe("Tests for Trainstation", () => {
         expect(response.body).to.have.property("error", 0);
 
         const test = await TrainstationModel.findOne({ name: "Versailles" });
-        // expect(test.deletedAt).to.not.be.null;
+        expect(test.deletedAt).to.not.be.null;
     });
 
     after(async () => {

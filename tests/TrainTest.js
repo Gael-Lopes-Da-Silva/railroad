@@ -79,22 +79,33 @@ describe("Tests for Train", () => {
   it("Update train by id", async () => {
     const response = await chai
       .request(app)
-      .post(`/train/update/${trainTest.id}`)
+      .post(`/trains/update/${trainTest.id}`)
       .set("Authorization", `Bearer ${token}`)
       .send({
-        name: "Ligne Paris-Versailles",
+        name: "Ligne Paris-Versailles-Orléans",
       });
 
     expect(response).to.have.status(202);
     expect(response.body).to.have.property("error", 0);
 
-    const test = await Train.findOne({
-      name: "Ligne TGV Grand Est",
+    const test = await TrainModel.findOne({
+      name: "Ligne Paris-Versailles-Orléans",
     });
 
     expect(test.name).to.not.equal(trainTest.name);
   });
 
+  it("Delete train by id", async () => {
+    const response = await chai
+      .request(app)
+      .post(`/trains/delete/${trainTest.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send();
+
+    expect(response).to.have.status(202);
+    expect(response.body).to.have.property("error", 0);
+  });
+  
   after(async () => {
     await UserModel.findByIdAndDelete(userAdmin.id);
   });
