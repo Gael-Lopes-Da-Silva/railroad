@@ -112,7 +112,7 @@ router.post("/login", (request, response) => {
 
 router.post("/get", authentification, checkEmployee, (request, response) => {
     getAllUsers().then((users) => {
-        response.status(200).json({
+        response.status(202).json({
             message: "Users fetched successfully !",
             users: users,
             error: 0,
@@ -129,7 +129,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
     getUser(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "User fetched successfully !",
                 user: user,
                 error: 0,
@@ -174,7 +174,7 @@ router.post("/update", authentification, (request, response) => {
     
     updateUser(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "User updated successfully !",
                 error: 0,
             });
@@ -241,7 +241,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 router.post("/delete", authentification, (request, response) => {
     deleteUser(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "User deleted successfully !",
                 error: 0,
             });
@@ -264,7 +264,7 @@ router.post("/delete", authentification, (request, response) => {
 router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
     deleteUser(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "User deleted successfully !",
                 error: 0,
             });
@@ -287,7 +287,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
 router.post("/set/admin/:id", authentification, checkAdmin, (request, response) => {
     setAdmin(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Role changed to admin successfully !",
                 error: 0,
             });
@@ -310,7 +310,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
 router.post("/set/employee/:id", authentification, checkAdmin, (request, response) => {
     setEmployee(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Role changed to employee successfully !",
                 error: 0,
             });
@@ -333,7 +333,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
 router.post("/set/user/:id", authentification, checkAdmin, (request, response) => {
     setUser(request).then((user) => {
         if (user) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Role changed to user successfully !",
                 error: 0,
             });

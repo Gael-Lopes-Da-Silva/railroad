@@ -56,7 +56,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
 router.post("/get/:id", authentification, checkEmployee, (request, response) => {
     getTicket(request).then((ticket) => {
         if (ticket) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Ticket fetched successuflly ! ",
                 ticket: ticket,
                 error: 0,
@@ -80,7 +80,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
 router.post("/validate/:id", authentification, checkEmployee, (request, response) => {
     validateTicket(request).then((ticket) => {
         if (ticket) {
-            response.status(200).json({
+            response.status(202).json({
                 message: "Ticket validated successfully !",
                 ticket: ticket,
                 error: 0,
