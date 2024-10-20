@@ -138,19 +138,19 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *     tags: [Train]
  *     security:
  *       - bearerAuth: []
- *       parameters:
- *         - in: query
- *           name: sort
- *           schema:
- *             type: string
- *             description: Optional sort parameters, can include fields like name, start_station, end_station, departure_time, active. Use '-' for descending order (e.g., '-name').
- *             example: "-departure_time"
- *         - in: query
- *           name: limit
- *           schema:
- *             type: integer
- *             description: Optional limit on the number of results to return.
- *             example: 10 by default, can be change (minimum 1)
+ *     parameters:
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           description: Optional sort parameters, can include fields like name, start_station, end_station, departure_time, active. Use '-' for descending order (e.g., '-name').
+ *           example: "-departure_time"
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           description: Optional limit on the number of results to return.
+ *           example: 10
  *     responses:
  *       202:
  *         description: Trains fetched successfully
@@ -221,7 +221,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   example: 1
  *                 error_message:
  *                   type: object
- *                   example: ...
+ *                   example: {}
  */
 router.post("/get",(request, response) => {
     // we try to get all the trains

@@ -265,19 +265,19 @@ router.post("/login", (request, response) => {
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
- *       parameters:
- *         - in: query
- *           name: sort
- *           schema:
- *             type: string
- *             description: Optional sort parameters, can include fields like pseudo, email, role. Use '-' for descending order (e.g., '-role').
- *             example: "-role"
- *         - in: query
- *           name: limit
- *           schema:
- *             type: integer
- *             description: Optional limit on the number of results to return.
- *             example: 10 by default, can be change (minimum 1)
+ *     parameters:
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           description: Optional sort parameters, can include fields like pseudo, email, role. Use '-' for descending order (e.g., '-role').
+ *           example: "-role"
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           description: Optional limit on the number of results to return.
+ *           example: 10 by default, can be change (minimum 1)
  *     responses:
  *       202:
  *         description: Users fetched successfully
