@@ -129,6 +129,39 @@ describe("Tests for User", () => {
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+
+        const admin = await UserModel.findOne({ email: "adminAfterUpdate@example.com" });
+        expect(admin.name).to.not.equal("admin");
+    });
+
+    it("Update user self with partial input", async () => {
+        const response = await chai
+            .request(app)
+            .post("/users/update")
+            .set("authorization", `Bearer ${token}`)
+            .send({
+                pseudo: "adminAfterUpdate2",
+            });
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+
+        const admin = await UserModel.findOne({ email: "adminAfterUpdate@example.com" });
+        expect(admin.name).to.not.equal("adminAfterUpdate");
+    });
+
+    it("Update user self with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post("/users/update")
+            .set("authorization", `Bearer ${token}`)
+            .send({
+                pseudo: "ad",
+                email: "adminAfterUpdate",
+            });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     it("Update user by id", async () => {
@@ -145,7 +178,7 @@ describe("Tests for User", () => {
         expect(response.body).to.have.property("error", 0);
 
         const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
-        expect(test.pseudo).to.not.equal(userTest.pseudo);
+        expect(test.pseudo).to.not.equal("test");
     });
 
     it("Update user by id with invalid input", async () => {
@@ -194,6 +227,81 @@ describe("Tests for User", () => {
         const response = await chai
             .request(app)
             .post(`/users/delete/6707dd12470c7097898ca3db`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
+    it("Set user role to admin", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/set/admin/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
+        expect(test.role).to.be.equal("admin");
+    });
+
+    it("Set user role to admin with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/set/admin/6707dd12470c7097898ca3db`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
+    it("Set user role to employee", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/set/employee/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
+        expect(test.role).to.be.equal("employee");
+    });
+
+    it("Set user role to employee with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/set/employee/6707dd12470c7097898ca3db`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
+    it("Set user role to user", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/set/user/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
+        expect(test.role).to.be.equal("user");
+    });
+
+    it("Set user role to user with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/set/user/6707dd12470c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send();
 

@@ -784,7 +784,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
 
 /**
  * @swagger
- * /set/admin/{id}:
+ * /users/set/admin/{id}:
  *   post:
  *     summary: Update the role of an user to admin by ID
  *     tags: [User]
@@ -842,7 +842,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
 
 /**
  * @swagger
- * /set/employee/{id}:
+ * /users/set/employee/{id}:
  *   post:
  *     summary: Update the role of a user to employee by ID
  *     tags: [User]
@@ -900,7 +900,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
 
 /**
  * @swagger
- * /set/user/{id}:
+ * /users/set/user/{id}:
  *   post:
  *     summary: Update the role of an user by ID
  *     tags: [User]
