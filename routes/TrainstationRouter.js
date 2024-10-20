@@ -122,10 +122,24 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
  *                         type: string
  *                         description: Name of the trainstation
  *                         example: "Gare Montparnasse"
- *                       location:
+ *                       open_hour:
  *                         type: string
- *                         description: Location of the trainstation
- *                         example: "17 Boulevard de Vaugirard, Paris"
+ *                         description: Opening hour of the trainstation
+ *                         example: "08:00"
+ *                       close_hour:
+ *                         type: string
+ *                         description: Closing hour of the trainstation
+ *                         example: "20:00"
+ *                       image:
+ *                         type: string
+ *                         format: binary
+ *                         description: Image of the trainstation encoded in base64
+ *                         example: "<base64 string>"
+ *                        deletedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: Soft delete timestamp, only returns data with a null condition, others are softly deleted then
+ *                         example: "2024-10-20T14:48:00Z"
  *                 error:
  *                   type: integer
  *                   example: 0
@@ -199,10 +213,24 @@ router.post("/get", (request, response) => {
  *                       type: string
  *                       description: Name of the trainstation
  *                       example: "Gare Montparnasse"
- *                     location:
- *                       type: string
- *                       description: Location of the trainstation
- *                       example: "17 Boulevard de Vaugirard, Paris"
+ *                     open_hour:
+ *                         type: string
+ *                         description: Opening hour of the trainstation
+ *                         example: "08:00"
+ *                       close_hour:
+ *                         type: string
+ *                         description: Closing hour of the trainstation
+ *                         example: "20:00"
+ *                       image:
+ *                         type: string
+ *                         format: binary
+ *                         description: Image of the trainstation encoded in base64
+ *                         example: "<base64 string>"
+ *                       deletedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: Soft delete timestamp, only returns data with a null condition, others are softly deleted then
+ *                         example: "2024-10-20T14:48:00Z"
  *                 error:
  *                   type: integer
  *                   example: 0
@@ -290,10 +318,24 @@ router.post("/get/:id", (request, response) => {
  *                 type: string
  *                 description: New name of the trainstation
  *                 example: "New Gare Montparnasse"
- *               location:
- *                 type: string
- *                 description: New location of the trainstation
- *                 example: "5 place de Vaugirard, Paris"
+ *               open_hour:
+ *                  type: string
+ *                  description: Opening hour of the trainstation
+ *                  example: "08:00"
+ *               close_hour:
+ *                  type: string
+ *                  description: Closing hour of the trainstation
+ *                  example: "20:00"
+ *               image:
+ *                   type: string
+ *                   format: binary
+ *                   description: Image of the trainstation encoded in base64
+ *                   example: "<base64 string>"
+ *               deletedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Soft delete timestamp
+ *                   example: "2024-10-20T14:48:00Z"
  *     responses:
  *       202:
  *         description: Trainstation updated successfully
