@@ -68,6 +68,11 @@ export async function getAllTrainstations(request) {
 }
 
 export async function getTrainstation(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we get the trainstation of the given id if not deleted
     return await TrainstationModel.findById(request.params.id, null, { deletedAt: null });
 }
@@ -97,6 +102,11 @@ export async function updateTrainstation(request) {
 }
 
 export async function deleteTrainstation(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     const startStationTrains = await TrainModel.find({ start_station: request.params.id }); // we get all the trains that start with this trainstation
     const endStationTrains = await TrainModel.find({ end_station: request.params.id }); // we get all the trains that end with this trainstation
 

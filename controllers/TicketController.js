@@ -1,8 +1,20 @@
+import mongoose from "mongoose";
+
 import TicketModel from "../models/TicketModel.js";
 import TrainModel from "../models/TrainModel.js";
 import UserModel from "../models/UserModel.js";
 
 export async function createTicket(request) {
+    // we check if the user id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.body.user)) {
+        return null;
+    }
+
+    // we check if the train id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.body.train)) {
+        return null;
+    }
+    
     const user = await UserModel.findById(request.body.user, null, { deletedAt: null });
     const train = await TrainModel.findById(request.body.train, null, { deletedAt: null });
     
@@ -54,11 +66,21 @@ export async function getAllTickets(request) {
 }
 
 export async function getTicket(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we get the ticket of the given id
     return await TicketModel.findById(request.params.id);
 }
 
 export async function validateTicket(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we validate the ticket of the given id with the current date
     return await TicketModel.findByIdAndUpdate(request.params.id, {
         validateTicket: Date.now(),

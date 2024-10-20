@@ -1,7 +1,19 @@
+import mongoose from "mongoose";
+
 import TrainModel from "../models/TrainModel.js";
 import TrainstationModel from "../models/TrainstationModel.js";
 
 export async function createTrain(request) {
+    // we check if the start station id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.body.start_station)) {
+        return null;
+    }
+
+    // we check if the end station id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.body.end_station)) {
+        return null;
+    }
+    
     const start_station = await TrainstationModel.findById(request.body.start_station, null, { deletedAt: null });
     const end_station = await TrainstationModel.findById(request.body.end_station, null, { deletedAt: null });
 
@@ -55,11 +67,21 @@ export async function getAllTrains(request) {
 }
 
 export async function getTrain(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we get the train of the given id if not deleted
     return await TrainModel.findById(request.params.id, null, { deletedAt: null });
 }
 
 export async function updateTrain(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // with get the old infos of the train of the given id
     let train = await TrainModel.findById(request.params.id, null, { deletedAt: null });
 
@@ -79,6 +101,11 @@ export async function updateTrain(request) {
 }
 
 export async function deleteTrain(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we soft delete the train of the given id
     return await TrainModel.findByIdAndUpdate(request.params.id, {
         deletedAt: Date.now(),
@@ -86,6 +113,11 @@ export async function deleteTrain(request) {
 }
 
 export async function activateTrain(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we activate the train of the given id
     return await TrainModel.findByIdAndUpdate(request.params.id, {
         active: true,
@@ -93,6 +125,11 @@ export async function activateTrain(request) {
 }
 
 export async function deactivateTrain(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we deactivate the train of the given id
     return await TrainModel.findByIdAndUpdate(request.params.id, {
         active: false,

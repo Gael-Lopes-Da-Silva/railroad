@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 import UserModel from "../models/UserModel.js";
 
@@ -12,6 +13,11 @@ export async function createUser(request) {
 }
 
 export async function updateUser(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id ? request.params.id : request.user.id)) {
+        return null;
+    }
+    
     // we get the old user infos either with a given id or with the id inside the token
     let user = await UserModel.findById(request.params.id ? request.params.id : request.user.id, null, { deletedAt: null });
     
@@ -30,6 +36,11 @@ export async function updateUser(request) {
 }
 
 export async function deleteUser(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id ? request.params.id : request.user.id)) {
+        return null;
+    }
+    
     // we soft delete the user of the given id or the logged user
     return await UserModel.findByIdAndUpdate(request.params.id ? request.params.id : request.user.id, {
         deletedAt: Date.now(),
@@ -37,6 +48,11 @@ export async function deleteUser(request) {
 }
 
 export async function getUser(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we get the user of the id if not deleted
 	return await UserModel.findById(request.params.id, null, { deletedAt: null });
 }
@@ -95,6 +111,11 @@ export async function login(request) {
 }
 
 export async function setAdmin(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we change the role of the user of the id to admin
     return await UserModel.findByIdAndUpdate(request.params.id, {
         role: "admin",
@@ -102,6 +123,11 @@ export async function setAdmin(request) {
 }
 
 export async function setEmployee(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we change the role of the user of the id to employee
     return await UserModel.findByIdAndUpdate(request.params.id, {
         role: "employee",
@@ -109,6 +135,11 @@ export async function setEmployee(request) {
 }
 
 export async function setUser(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // we change the role of the user of the id to user
     return await UserModel.findByIdAndUpdate(request.params.id, {
         role: "user",
