@@ -123,6 +123,19 @@ router.post("/book", authentification, (request, response) => {
  *     tags: [Ticket]
  *     security:
  *       - bearerAuth: []
+ *      parameters:
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *         description: Optional sort parameters, can include fields like name, start_station, end_station, departure_time, active. Use '-' for descending order (e.g., '-name').
+ *         example: "-departure_time,name"
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Optional limit on the number of results to return.
+ *         example: 10
  *     responses:
  *       202:
  *         description: Tickets fetched successfully
