@@ -84,6 +84,20 @@ describe("Tests for Ticket", () => {
         expect(ticketTest).to.not.be.null;
     });
 
+    it("Book ticket with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post("/tickets/book")
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                user: "6707dd12430c7097898ca3db",
+                train: "6707dd12430c2747898ca3db",
+            });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Get tickets", async () => {
         const response = await chai
             .request(app)
@@ -109,6 +123,17 @@ describe("Tests for Ticket", () => {
         expect(test.id).to.not.equal(userTest.id);
     });
 
+    it("Get ticket by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/tickets/get/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Validate ticket by id", async () => {
         const response = await chai
             .request(app)
@@ -121,6 +146,17 @@ describe("Tests for Ticket", () => {
         
         const test = await TicketModel.findOne({ train: trainTest.id });
         expect(test.validatedAd).to.not.be.null;
+    });
+
+    it("Validate ticket by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/tickets/validate/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     after(async () => {

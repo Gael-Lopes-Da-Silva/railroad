@@ -73,6 +73,17 @@ describe("Tests for Trainstation", () => {
         expect(test.id).to.be.equal(trainstationTest.id);
     });
 
+    it("Get trainsation by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trainstations/get/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Update trainsation by id", async () => {
         const response = await chai
             .request(app)
@@ -89,6 +100,19 @@ describe("Tests for Trainstation", () => {
         expect(test.name).to.not.equal(trainstationTest.name);
     });
 
+    it("Update trainsation by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trainstations/update/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                name: "Versailles",
+            });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Delete trainsation by id", async () => {
         const response = await chai
             .request(app)
@@ -101,6 +125,17 @@ describe("Tests for Trainstation", () => {
 
         const test = await TrainstationModel.findOne({ _id: trainstationTest.id });
         expect(test.deletedAt).to.not.be.null;
+    });
+
+    it("Delete trainsation by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trainstations/delete/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     after(async () => {
