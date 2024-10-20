@@ -140,13 +140,12 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *         schema:
  *           type: string
  *           description: Optional sort parameters, can include fields like name, start_station, end_station, departure_time, active. Use '-' for descending order (e.g., '-name').
- *           example: "-departure_time where - invert the sorted list"
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           description: Optional limit on the number of results to return.
- *           example: 10 by default, can be changed (min 1)
+ *           default: 10
  *     responses:
  *       202:
  *         description: Trains fetched successfully

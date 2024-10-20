@@ -135,7 +135,7 @@ router.post("/book", authentification, (request, response) => {
  *         schema:
  *           type: integer
  *           description: Optional limit on the number of results to return.
- *           example: 10 by default, can be changed (min 1)
+ *           default: 10
  *     responses:
  *       202:
  *         description: Tickets fetched successfully
