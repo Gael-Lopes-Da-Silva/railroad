@@ -13,7 +13,7 @@ Railroad is a javascript API to manage train, train stations and tickets. It run
 Usage
 ------------------------------------------------------------------
 
-First, you need to download [Nodejs](https://nodejs.org/en) and [Npm](https://www.npmjs.com/) to be able to run the server. After that go into the server root and run the following.
+First, you need to download [Nodejs](https://nodejs.org/en) and [Npm](https://www.npmjs.com/) to be able to run the server. You also need to install [Mongodb](https://en.wikipedia.org/wiki/MongoDB) database and be sure that it run in background. After that go into the server root and run the following.
 
 ~~~
 npm install
