@@ -42,18 +42,18 @@ const router = express.Router();
  *                 description: Name of the trainstation
  *                 example: "Strasbourg Gare Centrale"
  *               open_hour:
- *                  type: string
- *                  description: Opening hour of the trainstation
- *                  example: "08:00"
+ *                 type: string
+ *                 description: Opening hour of the trainstation
+ *                 example: "08:00"
  *               close_hour:
- *                  type: string
- *                  description: Closing hour of the trainstation
- *                  example: "20:00"
- *                image:
- *                  type: string
- *                  format: binary
- *                  description: Image of the trainstation encoded in base64
- *                  example: "<base64 string>"
+ *                 type: string
+ *                 description: Closing hour of the trainstation
+ *                 example: "20:00"
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: Image of the trainstation encoded in base64
+ *                 example: "<base64 string>"
  *     responses:
  *       201:
  *         description: Trainstation created successfully
@@ -223,23 +223,23 @@ router.post("/get", (request, response) => {
  *                       description: Name of the trainstation
  *                       example: "Gare Montparnasse"
  *                     open_hour:
- *                         type: string
- *                         description: Opening hour of the trainstation
- *                         example: "08:00"
- *                       close_hour:
- *                         type: string
- *                         description: Closing hour of the trainstation
- *                         example: "20:00"
- *                       image:
- *                         type: string
- *                         format: binary
- *                         description: Image of the trainstation encoded in base64
- *                         example: "<base64 string>"
- *                       deletedAt:
- *                         type: string
- *                         format: date-time
- *                         description: Soft delete timestamp, only returns data with a null condition, others are softly deleted then
- *                         example: "2024-10-20T14:48:00Z"
+ *                       type: string
+ *                       description: Opening hour of the trainstation
+ *                       example: "08:00"
+ *                     close_hour:
+ *                       type: string
+ *                       description: Closing hour of the trainstation
+ *                       example: "20:00"
+ *                     image:
+ *                       type: string
+ *                       format: binary
+ *                       description: Image of the trainstation encoded in base64
+ *                       example: "<base64 string>"
+ *                     deletedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       description: Soft delete timestamp, only returns data with a null condition, others are softly deleted then
+ *                       example: "2024-10-20T14:48:00Z"
  *                 error:
  *                   type: integer
  *                   example: 0
@@ -328,23 +328,23 @@ router.post("/get/:id", (request, response) => {
  *                 description: New name of the trainstation
  *                 example: "New Gare Montparnasse"
  *               open_hour:
- *                  type: string
- *                  description: Opening hour of the trainstation
- *                  example: "08:00"
+ *                 type: string
+ *                 description: Opening hour of the trainstation
+ *                 example: "08:00"
  *               close_hour:
- *                  type: string
- *                  description: Closing hour of the trainstation
- *                  example: "20:00"
+ *                 type: string
+ *                 description: Closing hour of the trainstation
+ *                 example: "20:00"
  *               image:
- *                   type: string
- *                   format: binary
- *                   description: Image of the trainstation encoded in base64
- *                   example: "<base64 string>"
+ *                 type: string
+ *                 format: binary
+ *                 description: Image of the trainstation encoded in base64
+ *                 example: "<base64 string>"
  *               deletedAt:
- *                   type: string
- *                   format: date-time
- *                   description: Soft delete timestamp
- *                   example: "2024-10-20T14:48:00Z"
+ *                 type: string
+ *                 format: date-time
+ *                 description: Soft delete timestamp
+ *                 example: "2024-10-20T14:48:00Z"
  *     responses:
  *       202:
  *         description: Trainstation updated successfully
