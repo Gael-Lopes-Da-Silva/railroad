@@ -682,14 +682,14 @@ router.post("/delete", authentification, (request, response) => {
             });
         } else {
             response.status(404).json({
-                message: "Somehting went wrong while deleting user !",
+                message: "Something went wrong while deleting user !",
                 error: 1,
                 error_message: "Can't find user !",
             });
         }
     }).catch((error) => {
         response.status(500).json({
-            message: "Somehting went wrong while deleting user !",
+            message: "Something went wrong while deleting user !",
             error: 1,
             error_message: error,
         });
@@ -768,14 +768,14 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
             });
         } else {
             response.status(404).json({
-                message: "Somehting went wrong while deleting user !",
+                message: "Something went wrong while deleting user !",
                 error: 1,
                 error_message: "Can't find user !",
             });
         }
     }).catch((error) => {
         response.status(500).json({
-            message: "Somehting went wrong while deleting user !",
+            message: "Something went wrong while deleting user !",
             error: 1,
             error_message: error,
         });
@@ -826,14 +826,14 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
             });
         } else {
             response.status(404).json({
-                message: "Somehting went wrong while seting user role to admin !",
+                message: "Something went wrong while seting user role to admin !",
                 error: 1,
                 error_message: "Can't find user !",
             });
         }
     }).catch((error) => {
         response.status(500).json({
-            message: "Somehting went wrong while seting user role to admin !",
+            message: "Something went wrong while seting user role to admin !",
             error: 1,
             error_message: error,
         });
@@ -884,14 +884,14 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
             });
         } else {
             response.status(404).json({
-                message: "Somehting went wrong while seting user role to employee !",
+                message: "Something went wrong while seting user role to employee !",
                 error: 1,
                 error_message: "Can't find user !",
             });
         }
     }).catch((error) => {
         response.status(500).json({
-            message: "Somehting went wrong while seting user role to employee !",
+            message: "Something went wrong while seting user role to employee !",
             error: 1,
             error_message: error,
         });
@@ -942,14 +942,14 @@ router.post("/set/user/:id", authentification, checkAdmin, (request, response) =
             });
         } else {
             response.status(404).json({
-                message: "Somehting went wrong while seting user role to user !",
+                message: "Something went wrong while seting user role to user !",
                 error: 1,
                 error_message: "Can't find user !",
             });
         }
     }).catch((error) => {
         response.status(500).json({
-            message: "Somehting went wrong while seting user role to user !",
+            message: "Something went wrong while seting user role to user !",
             error: 1,
             error_message: error,
         });
