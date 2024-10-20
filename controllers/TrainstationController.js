@@ -1,4 +1,5 @@
 import sharp from "sharp";
+import mongoose from "mongoose";
 
 import TrainstationModel from "../models/TrainstationModel.js";
 import TrainModel from "../models/TrainModel.js";
@@ -72,6 +73,11 @@ export async function getTrainstation(request) {
 }
 
 export async function updateTrainstation(request) {
+    // we check if the id is a valid mongoose id
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return null;
+    }
+    
     // with get the old infos of the trainstation of the given id
     let trainstation = await TrainstationModel.findById(request.params.id, null, { deletedAt: null });
 
