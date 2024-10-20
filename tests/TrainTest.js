@@ -69,6 +69,22 @@ describe("Tests for Train", () => {
         expect(trainTest).to.not.be.null;
     });
 
+    it("Create train with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post("/trains/create")
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                name: "Ligne Perpignan-Toulouse",
+                start_station: "6707dd12430c7097898ca3db",
+                end_station: "6707dd12430crc97898ca3db",
+                departure_time: new Date(),
+            });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Get trains", async () => {
         const response = await chai
             .request(app)
@@ -89,6 +105,20 @@ describe("Tests for Train", () => {
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
+
+        const test = await TrainModel.findOne({ start_station: startTrainstationTest._id, end_station: endTrainstationTest._id });
+        expect(test.id).to.be.equal(trainTest.id);
+    });
+
+    it("Get train by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trains/get/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     it("Update train by id", async () => {
@@ -107,6 +137,19 @@ describe("Tests for Train", () => {
         expect(test.name).to.not.equal(trainTest.name);
     });
 
+    it("Update train by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trains/update/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                name: "Ligne Perpignan-Toulouse-Bordeaux",
+            });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Delete train by id", async () => {
         const response = await chai
             .request(app)
@@ -119,6 +162,17 @@ describe("Tests for Train", () => {
 
         const test = await TrainModel.findOne({ start_station: startTrainstationTest._id, end_station: endTrainstationTest._id });
         expect(test.deletedAt).to.not.be.null;
+    });
+
+    it("Delete train by id", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trains/delete/6707dd12430c7097898ca3db`)
+            .set("Authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     after(async () => {

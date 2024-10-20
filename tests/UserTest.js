@@ -37,6 +37,17 @@ describe("Tests for User", () => {
         expect(userTest).to.not.be.null;
     });
 
+    it("Register user with invalid input", async () => {
+        const response = await chai.request(app).post("/users/register").send({
+            pseudo: "te",
+            email: "test",
+            password: "te",
+        });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Login user", async () => {
         const response = await chai.request(app).post("/users/login").send({
             email: "admin@example.com",
@@ -48,6 +59,26 @@ describe("Tests for User", () => {
         expect(response.body).to.have.property("token").that.is.a("string");
 
         token = response.body.token;
+    });
+
+    it("Login user with false input", async () => {
+        const response = await chai.request(app).post("/users/login").send({
+            email: "admin@example.com",
+            password: "admin",
+        });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
+    it("Login user with invalid input", async () => {
+        const response = await chai.request(app).post("/users/login").send({
+            email: "admin",
+            password: "ad",
+        });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     it("Get users", async () => {
@@ -73,6 +104,17 @@ describe("Tests for User", () => {
 
         const test = await UserModel.findOne({ email: "test@example.com" });
         expect(test.id).to.be.equal(userTest.id);
+    });
+
+    it("Get user by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/get/6707dd12730c7097898ca3db`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     it("Update user self", async () => {
@@ -106,6 +148,20 @@ describe("Tests for User", () => {
         expect(test.pseudo).to.not.equal(userTest.pseudo);
     });
 
+    it("Update user by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/update/6707dd12437c7097898ca3db`)
+            .set("authorization", `Bearer ${token}`)
+            .send({
+                pseudo: "testAfterUpdate",
+                email: "testAfterUpdate@example.com",
+            });
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
+    });
+
     it("Delete user self", async () => {
         const response = await chai
             .request(app)
@@ -132,6 +188,17 @@ describe("Tests for User", () => {
 
         const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
         expect(test.deletedAt).to.not.be.null;
+    });
+
+    it("Delete user by id with invalid input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/delete/6707dd12470c7097898ca3db`)
+            .set("authorization", `Bearer ${token}`)
+            .send();
+
+        expect(response).to.have.status(404);
+        expect(response.body).to.have.property("error", 1);
     });
 
     after(async () => {
