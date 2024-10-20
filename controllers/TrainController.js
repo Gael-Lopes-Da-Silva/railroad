@@ -6,7 +6,7 @@ export async function createTrain(request) {
     const end_station = TrainstationModel.findById(request.body.end_station, null, { deletedAt: null });
 
     // we get and check if the start and end station are valid stations (exists and not deleted)
-    if (!start_station || !end_station) {
+    if (start_station == null || end_station == null) {
         return null;
     }
 
