@@ -1,3 +1,5 @@
+import fs from "fs";
+
 import express from "express";
 import mongoose, { Schema } from "mongoose";
 import swaggerJsdoc from "swagger-jsdoc";

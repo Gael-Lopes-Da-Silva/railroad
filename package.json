@@ -5,7 +5,7 @@
     "scripts": {
         "start": "nodemon server.js",
         "pack": "npm-pack-zip",
-        "test": "nyc mocha ./tests/*.js --exit"
+        "test": "mocha ./tests/*.js --exit"
     },
     "type": "module",
     "dependencies": {
@@ -25,21 +25,6 @@
         "chai-http": "^4.4.0",
         "mocha": "^10.2.0",
         "nodemon": "^3.1.7",
-        "npm-pack-zip": "^1.3.0",
-        "nyc": "^17.1.0"
-    },
-    "nyc": {
-        "all": true,
-        "extension": [
-            ".js"
-        ],
-        "include": [
-            "tests/*.js"
-        ],
-        "exclude": [],
-        "reporter": [
-            "text",
-            "html"
-        ]
+        "npm-pack-zip": "^1.3.0"
     }
 }
