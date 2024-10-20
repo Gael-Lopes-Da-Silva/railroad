@@ -2,8 +2,8 @@ import TrainModel from "../models/TrainModel.js";
 import TrainstationModel from "../models/TrainstationModel.js";
 
 export async function createTrain(request) {
-    const start_station = TrainstationModel.findById(request.body.start_station, { deletedAt: null });
-    const end_station = TrainstationModel.findById(request.body.end_station, { deletedAt: null });
+    const start_station = TrainstationModel.findById(request.body.start_station, null, { deletedAt: null });
+    const end_station = TrainstationModel.findById(request.body.end_station, null, { deletedAt: null });
 
     // we get and check if the start and end station are valid stations (exists and not deleted)
     if (!start_station || !end_station) {
