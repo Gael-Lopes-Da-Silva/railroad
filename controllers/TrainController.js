@@ -63,7 +63,7 @@ export async function updateTrain(request) {
     // with get the old infos of the train of the given id
     let train = await TrainModel.findById(request.params.id, null, { deletedAt: null });
 
-    // we check if the train station exist
+    // we check if the train exist
     if (!train) {
         return null;
     }
