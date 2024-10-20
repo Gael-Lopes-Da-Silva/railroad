@@ -355,11 +355,6 @@ router.post("/get/:id", (request, response) => {
  *                 format: binary
  *                 description: Image of the trainstation encoded in base64
  *                 example: "<base64 string>"
- *               deletedAt:
- *                 type: string
- *                 format: date-time
- *                 description: Soft delete timestamp
- *                 example: "2024-10-20T14:48:00Z"
  *     responses:
  *       202:
  *         description: Trainstation updated successfully
