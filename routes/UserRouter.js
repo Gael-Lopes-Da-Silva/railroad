@@ -271,7 +271,7 @@ router.post("/login", (request, response) => {
  *         schema:
  *           type: string
  *           description: Optional sort parameters, can include fields like pseudo, email, role. Use '-' for descending order (e.g., '-role').
- *           example: "-role"
+ *           example: "-role where - invert the sorted list"
  *       - in: query
  *         name: limit
  *         schema:

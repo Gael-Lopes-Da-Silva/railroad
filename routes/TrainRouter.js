@@ -144,7 +144,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *         schema:
  *           type: string
  *           description: Optional sort parameters, can include fields like name, start_station, end_station, departure_time, active. Use '-' for descending order (e.g., '-name').
- *           example: "-departure_time"
+ *           example: "-departure_time where - invert the sorted list"
  *       - in: query
  *         name: limit
  *         schema:

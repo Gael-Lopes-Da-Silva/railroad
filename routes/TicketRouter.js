@@ -35,11 +35,11 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               user:
  *                 type: string
  *                 description: ID of the user booking the ticket
  *                 example: "61f1f2c3e5b4c71f0d6e12ab"
- *               trainId:
+ *               train:
  *                 type: string
  *                 description: ID of the train for the ticket
  *                 example: "61f1f2c3e5b4c71f0d6e12ac"
@@ -129,7 +129,7 @@ router.post("/book", authentification, (request, response) => {
  *         schema:
  *           type: string
  *           description: Optional sort parameters, can include fields like user, train, validatedAt. Use '-' for descending order (e.g., '-train').
- *           example: "-train"
+ *           example: "-train where - invert the sorted list"
  *       - in: query
  *         name: limit
  *         schema:
