@@ -150,7 +150,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *         schema:
  *           type: integer
  *           description: Optional limit on the number of results to return.
- *           example: 10
+ *           example: 10 by default, can be changed (min 1)
  *     responses:
  *       202:
  *         description: Trains fetched successfully

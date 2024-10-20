@@ -121,7 +121,7 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
  *         schema:
  *           type: integer
  *           description: Optional limit on the number of results to return.
- *           example: 10 by default, can be change (minimum 1)
+ *           example: 10 by default, can be changed (min 1)
  *     responses:
  *       202:
  *         description: Trainstations fetched successfully
