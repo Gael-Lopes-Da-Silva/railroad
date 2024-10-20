@@ -181,6 +181,22 @@ describe("Tests for User", () => {
         expect(test.pseudo).to.not.equal("test");
     });
 
+    it("Update user by id with partial input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/users/update/${userTest.id}`)
+            .set("authorization", `Bearer ${token}`)
+            .send({
+                pseudo: "testAfterUpdate2",
+            });
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+
+        const test = await UserModel.findOne({ email: "testAfterUpdate@example.com" });
+        expect(test.pseudo).to.not.equal("testAfterUpdate");
+    });
+
     it("Update user by id with invalid input", async () => {
         const response = await chai
             .request(app)

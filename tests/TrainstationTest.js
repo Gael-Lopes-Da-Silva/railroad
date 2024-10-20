@@ -84,20 +84,22 @@ describe("Tests for Trainstation", () => {
         expect(response.body).to.have.property("error", 1);
     });
 
-    it("Update trainsation by id", async () => {
+    it("Update trainsation by id with partial input", async () => {
         const response = await chai
             .request(app)
             .post(`/trainstations/update/${trainstationTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Versailles",
+                open_hour: "04:00",
             });
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
 
         const test = await TrainstationModel.findOne({ name: "Versailles" });
-        expect(test.name).to.not.equal(trainstationTest.name);
+        expect(test.name).to.not.equal("Paris");
+        expect(test.open_hour).to.not.equal("03:30");
     });
 
     it("Update trainsation by id with invalid input", async () => {
@@ -105,9 +107,10 @@ describe("Tests for Trainstation", () => {
             .request(app)
             .post(`/trainstations/update/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
-            .send({
-                name: "Versailles",
-            });
+            .field("name", "Versailles")
+            .field("open_hour", "03:30")
+            .field("close_hour", "00:00")
+            .attach("image", "public/assets/trainstation.jpg", "trainstation.jpg");
 
         expect(response).to.have.status(404);
         expect(response.body).to.have.property("error", 1);

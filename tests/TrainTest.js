@@ -128,13 +128,32 @@ describe("Tests for Train", () => {
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Ligne Perpignan-Toulouse-Bordeaux",
+                start_station: startTrainstationTest._id,
+                end_station: endTrainstationTest._id,
+                departure_time: new Date(),
             });
 
         expect(response).to.have.status(202);
         expect(response.body).to.have.property("error", 0);
 
         const test = await TrainModel.findOne({ start_station: startTrainstationTest._id, end_station: endTrainstationTest._id });
-        expect(test.name).to.not.equal(trainTest.name);
+        expect(test.name).to.not.equal("Ligne Perpignan-Toulouse");
+    });
+
+    it("Update train by id with partial input", async () => {
+        const response = await chai
+            .request(app)
+            .post(`/trains/update/${trainTest.id}`)
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                name: "Ligne Perpignan-Toulouse-Bordeaux Test",
+            });
+
+        expect(response).to.have.status(202);
+        expect(response.body).to.have.property("error", 0);
+
+        const test = await TrainModel.findOne({ start_station: startTrainstationTest._id, end_station: endTrainstationTest._id });
+        expect(test.name).to.not.equal("Ligne Perpignan-Toulouse-Bordeaux");
     });
 
     it("Update train by id with invalid input", async () => {
@@ -144,6 +163,9 @@ describe("Tests for Train", () => {
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Ligne Perpignan-Toulouse-Bordeaux",
+                start_station: "6707dd12430c7097898ca3db",
+                end_station: "6707dd12430crc97898ca3db",
+                departure_time: new Date(),
             });
 
         expect(response).to.have.status(404);
