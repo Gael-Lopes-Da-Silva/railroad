@@ -55,10 +55,6 @@ const router = express.Router();
  *                 format: date-time
  *                 description: The departure time for the train
  *                 example: "2023-01-01T09:00:00Z"
- *               active:
- *                 type: boolean
- *                 description: The active status of the train
- *                 example: true
  *     responses:
  *       201:
  *         description: Train created successfully
