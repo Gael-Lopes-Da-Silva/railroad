@@ -107,6 +107,21 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
  *   post:
  *     summary: Retrieve all trainstations
  *     tags: [Trainstation]
+ *     security:
+ *       - bearerAuth: []
+ *       parameters:
+ *         - in: query
+ *           name: sort
+ *           schema:
+ *             type: string
+ *             description: Optional sort parameters, can include fields like name, open_hour, close_hour. Use '-' for descending order (e.g., '-name').
+ *             example: "-train"
+ *         - in: query
+ *           name: limit
+ *           schema:
+ *             type: integer
+ *             description: Optional limit on the number of results to return.
+ *             example: 10 by default, can be change (minimum 1)
  *     responses:
  *       202:
  *         description: Trainstations fetched successfully
