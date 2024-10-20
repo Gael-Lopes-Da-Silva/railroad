@@ -75,7 +75,12 @@ export async function getTrainstation(request) {
 
 export async function updateTrainstation(request) {
     // with get the old infos of the trainstation of the given id
-    let trainstation = TrainstationModel.findById(request.params.id);
+    let trainstation = await TrainstationModel.findById(request.params.id);
+
+    // we check if the train station exist
+    if (!trainstation) {
+        return null;
+    }
 
     // we change the infos of the trainstation of the given id
     // if the data is not set in body, we use the old value
