@@ -242,6 +242,8 @@ router.post("/get",(request, response) => {
  *   post:
  *     summary: Retrieve a specific train by ID
  *     tags: [Train]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path

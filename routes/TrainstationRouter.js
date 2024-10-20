@@ -208,6 +208,8 @@ router.post("/get", (request, response) => {
  *   post:
  *     summary: Retrieve a specific trainstation by ID
  *     tags: [Trainstation]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
