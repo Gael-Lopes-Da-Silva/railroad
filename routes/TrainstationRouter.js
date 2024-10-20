@@ -41,10 +41,19 @@ const router = express.Router();
  *                 type: string
  *                 description: Name of the trainstation
  *                 example: "Strasbourg Gare Centrale"
- *               location:
- *                 type: string
- *                 description: Location of the trainstation
- *                 example: "1 rue de la gare, Strasbourg"
+ *               open_hour:
+ *                  type: string
+ *                  description: Opening hour of the trainstation
+ *                  example: "08:00"
+ *               close_hour:
+ *                  type: string
+ *                  description: Closing hour of the trainstation
+ *                  example: "20:00"
+ *                image:
+ *                  type: string
+ *                  format: binary
+ *                  description: Image of the trainstation encoded in base64
+ *                  example: "<base64 string>"
  *     responses:
  *       201:
  *         description: Trainstation created successfully
@@ -135,7 +144,7 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
  *                         format: binary
  *                         description: Image of the trainstation encoded in base64
  *                         example: "<base64 string>"
- *                        deletedAt:
+ *                       deletedAt:
  *                         type: string
  *                         format: date-time
  *                         description: Soft delete timestamp, only returns data with a null condition, others are softly deleted then
