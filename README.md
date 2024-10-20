@@ -26,3 +26,5 @@ If you want to launch the unit testing, run the following.
 ~~~
 npm test
 ~~~
+
+To add a train station you need to provide an image. For that you can follow this tutorial on how to send images throught Postman: [How to upload image to a POST request](https://community.postman.com/t/how-to-upload-images-to-a-post-request/15256/2).
