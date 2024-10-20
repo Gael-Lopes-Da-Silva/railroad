@@ -3,8 +3,8 @@ import TrainModel from "../models/TrainModel.js";
 import UserModel from "../models/UserModel.js";
 
 export async function createTicket(request) {
-    const user = UserModel.findById(request.body.user, null, { deletedAt: null });
-    const train = TrainModel.findById(request.body.train, null, { deletedAt: null });
+    const user = await UserModel.findById(request.body.user, null, { deletedAt: null });
+    const train = await TrainModel.findById(request.body.train, null, { deletedAt: null });
     
     // we get and check if the user and the train are valid (exists, not deleted, and active)
     if (!user || !train) {

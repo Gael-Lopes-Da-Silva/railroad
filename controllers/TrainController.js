@@ -2,11 +2,11 @@ import TrainModel from "../models/TrainModel.js";
 import TrainstationModel from "../models/TrainstationModel.js";
 
 export async function createTrain(request) {
-    const start_station = TrainstationModel.findById(request.body.start_station, null, { deletedAt: null });
-    const end_station = TrainstationModel.findById(request.body.end_station, null, { deletedAt: null });
+    const start_station = await TrainstationModel.findById(request.body.start_station, null, { deletedAt: null });
+    const end_station = await TrainstationModel.findById(request.body.end_station, null, { deletedAt: null });
 
     // we get and check if the start and end station are valid stations (exists and not deleted)
-    if (start_station == null || end_station == null) {
+    if (!start_station || !end_station) {
         return null;
     }
 
@@ -61,7 +61,7 @@ export async function getTrain(request) {
 
 export async function updateTrain(request) {
     // with get the old infos of the train of the given id
-    let train = TrainModel.findById(request.params.id)
+    let train = await TrainModel.findById(request.params.id)
     
     // we change the infos of the train of the given id
     // if the data is not set in body, we use the old value

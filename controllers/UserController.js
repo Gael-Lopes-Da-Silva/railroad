@@ -13,7 +13,7 @@ export async function createUser(request) {
 
 export async function updateUser(request) {
     // we get the old user infos either with a given id or with the id inside the token
-    let user = UserModel.findById(request.params.id ? request.params.id : request.user.id);
+    let user = await UserModel.findById(request.params.id ? request.params.id : request.user.id);
     
     // we change the user of the given id or the logged user
     // if the data is not set in body, we use the old value
