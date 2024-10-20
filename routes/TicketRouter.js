@@ -129,7 +129,6 @@ router.post("/book", authentification, (request, response) => {
  *         schema:
  *           type: string
  *           description: Optional sort parameters, can include fields like user, train, validatedAt. Use '-' for descending order (e.g., '-train').
- *           example: "-train where - invert the sorted list"
  *       - in: query
  *         name: limit
  *         schema:

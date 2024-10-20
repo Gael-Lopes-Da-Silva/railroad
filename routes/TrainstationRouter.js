@@ -115,7 +115,6 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
  *         schema:
  *           type: string
  *           description: Optional sort parameters, can include fields like name, open_hour, close_hour. Use '-' for descending order (e.g., '-name').
- *           example: "-train where - invert the sorted list"
  *       - in: query
  *         name: limit
  *         schema:
