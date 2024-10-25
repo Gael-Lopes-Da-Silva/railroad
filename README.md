@@ -1,6 +1,6 @@
 <div align="center">
 	<h1>Railroad</h1>
-    <a href="https://github.com/Gael-Lopes-Da-Silva/tiny.brainfuck">https://github.com/Gael-Lopes-Da-Silva/railroad</a>
+    <a href="https://github.com/Gael-Lopes-Da-Silva/railroad">https://github.com/Gael-Lopes-Da-Silva/railroad</a>
 </div>
 
 
