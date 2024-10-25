@@ -35,4 +35,4 @@ Manualy test the API
 
 First you will need an admin user. To create one, create a simple user via the /users/register endpoint using valid input. After that, manualy change the `role` field in Mongodb using [Mongosh](https://www.mongodb.com/docs/mongodb-shell/) or [Mongo Compass](https://www.mongodb.com/products/tools/compass).
 
-After that, in the documentation, you will need to go to the /users/login end point and
+After that, in the documentation, you will need to go to the /users/login end point and click on `Try it out`. In the body add the informations of the newly created admin user. If successfull, you will get a token returned. Copy this token and paste it in the menu that appears when clicking on `Authorize`. After that you will be able to use all the endpoints freely.
