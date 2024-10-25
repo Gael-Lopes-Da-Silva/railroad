@@ -129,7 +129,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
 /**
  * @swagger
  * /trains/get:
- *   post:
+ *   get:
  *     summary: Retrieve all trains
  *     tags: [Train]
  *     security:
@@ -218,7 +218,7 @@ router.post("/create", authentification, checkAdmin, (request, response) => {
  *                   type: object
  *                   example: {}
  */
-router.post("/get",(request, response) => {
+router.get("/get",(request, response) => {
     // we try to get all the trains
     // we can use queries like sort or limit to sort output
     getAllTrains(request).then((trains) => {
@@ -239,7 +239,7 @@ router.post("/get",(request, response) => {
 /**
  * @swagger
  * /trains/get/{id}:
- *   post:
+ *   get:
  *     summary: Retrieve a specific train by ID
  *     tags: [Train]
  *     security:
@@ -337,7 +337,7 @@ router.post("/get",(request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/get/:id", (request, response) => {
+router.get("/get/:id", (request, response) => {
     // we try to get the train with the given id
     getTrain(request).then((train) => {
         if (train) {
@@ -365,7 +365,7 @@ router.post("/get/:id", (request, response) => {
 /**
  * @swagger
  * /trains/update/{id}:
- *   post:
+ *   put:
  *     summary: Update train details by ID
  *     tags: [Train]
  *     security:
@@ -452,7 +452,7 @@ router.post("/get/:id", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/update/:id", authentification, checkAdmin, (request, response) => {
+router.put("/update/:id", authentification, checkAdmin, (request, response) => {
     // we try to update the train with the given id and body fields
     // not all fields are required !
     updateTrain(request).then((train) => {
@@ -480,7 +480,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 /**
  * @swagger
  * /trains/delete/{id}:
- *   post:
+ *   delete:
  *     summary: Delete train by ID
  *     tags: [Train]
  *     security:
@@ -539,7 +539,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+router.delete("/delete/:id", authentification, checkAdmin, (request, response) => {
     // we try to delete the train of the given id
     deleteTrain(request).then((train) => {
         if (train) {
@@ -566,7 +566,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
 /**
  * @swagger
  * /trains/set/activate/{id}:
- *   post:
+ *   put:
  *     summary: Activate a specific train by ID
  *     tags: [Train]
  *     security:
@@ -625,7 +625,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-router.post("/set/activate/:id", authentification, checkAdmin, (request, response) => {
+router.put("/set/activate/:id", authentification, checkAdmin, (request, response) => {
     // we try to activate the train of the given id
     // do nothing if the train is already activated
     activateTrain(request).then((train) => {
@@ -653,7 +653,7 @@ router.post("/set/activate/:id", authentification, checkAdmin, (request, respons
 /**
  * @swagger
  * /trains/set/deactivate/{id}:
- *   post:
+ *   put:
  *     summary: Deactivate a specific train by ID
  *     tags: [Train]
  *     security:
@@ -712,7 +712,7 @@ router.post("/set/activate/:id", authentification, checkAdmin, (request, respons
  *                   type: object
  *                   example: ...
  */
-router.post("/set/deactivate/:id", authentification, checkAdmin, (request, response) => {
+router.put("/set/deactivate/:id", authentification, checkAdmin, (request, response) => {
     // we try to deactivate the train of the given id
     // do nothing if the train is already deactivated
     deactivateTrain(request).then((train) => {

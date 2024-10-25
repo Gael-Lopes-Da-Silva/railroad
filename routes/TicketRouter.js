@@ -118,7 +118,7 @@ router.post("/book", authentification, (request, response) => {
 /**
  * @swagger
  * /tickets/get:
- *   post:
+ *   get:
  *     summary: Retrieve all tickets
  *     tags: [Ticket]
  *     security:
@@ -188,7 +188,7 @@ router.post("/book", authentification, (request, response) => {
  *                   type: object
  *                   example: {}
  */
-router.post("/get", authentification, checkEmployee, (request, response) => {
+router.get("/get", authentification, checkEmployee, (request, response) => {
     // we try to get all tickets
     // we can use queries like sort or limit to sort output
     getAllTickets(request).then((tickets) => {
@@ -209,7 +209,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
 /**
  * @swagger
  * /tickets/get/{id}:
- *   post:
+ *   get:
  *     summary: Retrieve a specific ticket by ID
  *     tags: [Ticket]
  *     security:
@@ -288,7 +288,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/get/:id", authentification, checkEmployee, (request, response) => {
+router.get("/get/:id", authentification, checkEmployee, (request, response) => {
     // we try to get a ticket with the given id
     getTicket(request).then((ticket) => {
         if (ticket) {
@@ -316,7 +316,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
 /**
  * @swagger
  * /tickets/validate/{id}:
- *   post:
+ *   put:
  *     summary: Validate a ticket by ID
  *     tags: [Ticket]
  *     security:
@@ -395,7 +395,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-router.post("/validate/:id", authentification, checkEmployee, (request, response) => {
+router.put("/validate/:id", authentification, checkEmployee, (request, response) => {
     // we try to validate a ticket
     // validating a ticket put the date in validatedAt field
     validateTicket(request).then((ticket) => {

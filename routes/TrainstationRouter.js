@@ -104,7 +104,7 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
 /**
  * @swagger
  * /trainstations/get:
- *   post:
+ *   get:
  *     summary: Retrieve all trainstations
  *     tags: [Trainstation]
  *     security:
@@ -183,7 +183,7 @@ router.post("/create", authentification, checkAdmin, upload.single('image'), (re
  *                   type: object
  *                   example: ...
  */
-router.post("/get", (request, response) => {
+router.get("/get", (request, response) => {
     // we try to get all trainstations
     // we can use queries like sort or limit to sort output
     getAllTrainstations(request).then((trainstations) => {
@@ -204,7 +204,7 @@ router.post("/get", (request, response) => {
 /**
  * @swagger
  * /trainstations/get/{id}:
- *   post:
+ *   get:
  *     summary: Retrieve a specific trainstation by ID
  *     tags: [Trainstation]
  *     security:
@@ -292,7 +292,7 @@ router.post("/get", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/get/:id", (request, response) => {
+router.get("/get/:id", (request, response) => {
     // we try to get the traistation of the given id
     getTrainstation(request).then((trainstation) => {
         if (trainstation) {
@@ -320,7 +320,7 @@ router.post("/get/:id", (request, response) => {
 /**
  * @swagger
  * /trainstations/update/{id}:
- *   post:
+ *   put:
  *     summary: Update a trainstation by ID
  *     tags: [Trainstation]
  *     security:
@@ -403,7 +403,7 @@ router.post("/get/:id", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/update/:id", authentification, checkAdmin, (request, response) => {
+router.put("/update/:id", authentification, checkAdmin, (request, response) => {
     // we try to update the trainstation of the given id with the given filds in the body
     // not all fields are required !
     updateTrainstation(request).then((trainstation) => {
@@ -431,7 +431,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 /**
  * @swagger
  * /trainstations/delete/{id}:
- *   post:
+ *   delete:
  *     summary: Delete a trainstation by ID
  *     tags: [Trainstation]
  *     security:
@@ -490,7 +490,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+router.delete("/delete/:id", authentification, checkAdmin, (request, response) => {
     // try to delete user of the given id
     deleteTrainstation(request).then((trainstation) => {
         if (trainstation) {

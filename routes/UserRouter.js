@@ -140,7 +140,7 @@ router.post("/register", (request, response) => {
 /**
  * @swagger
  * /users/login:
- *   post:
+ *   get:
  *     summary: Authenticate user and return a token
  *     tags: [User]
  *     requestBody:
@@ -209,7 +209,7 @@ router.post("/register", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/login", (request, response) => {
+router.get("/login", (request, response) => {
     const userSchema = joi.object({
         email: joi.string().email().max(320).required(),
         password: joi.string().min(8).max(320).required(),
@@ -260,7 +260,7 @@ router.post("/login", (request, response) => {
 /**
  * @swagger
  * /users/get:
- *   post:
+ *   get:
  *     summary: Retrieve all users
  *     tags: [User]
  *     security:
@@ -326,7 +326,7 @@ router.post("/login", (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/get", authentification, checkEmployee, (request, response) => {
+router.get("/get", authentification, checkEmployee, (request, response) => {
     // we try to get all users
     // we can use queries like sort or limit to sort output
     getAllUsers(request).then((users) => {
@@ -347,7 +347,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
 /**
  * @swagger
  * /users/get/{id}:
- *   post:
+ *   get:
  *     summary: Retrieve user details by ID
  *     tags: [User]
  *     security:
@@ -421,7 +421,7 @@ router.post("/get", authentification, checkEmployee, (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/get/:id", authentification, checkEmployee, (request, response) => {
+router.get("/get/:id", authentification, checkEmployee, (request, response) => {
     // we try to get user by the given id
     getUser(request).then((user) => {
         if (user) {
@@ -449,7 +449,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
 /**
  * @swagger
  * /users/update:
- *   post:
+ *   put:
  *     summary: Update authenticated user details
  *     tags: [User]
  *     security:
@@ -481,7 +481,7 @@ router.post("/get/:id", authentification, checkEmployee, (request, response) => 
  *       500:
  *         description: Something went wrong while updating user
  */
-router.post("/update", authentification, (request, response) => {
+router.put("/update", authentification, (request, response) => {
     const userSchema = joi.object({
         pseudo: joi.string().alphanum().min(3).max(30),
         email: joi.string().email().max(320),
@@ -531,7 +531,7 @@ router.post("/update", authentification, (request, response) => {
 /**
  * @swagger
  * /users/update/{id}:
- *   post:
+ *   put:
  *     summary: Update user by id
  *     tags: [User]
  *     security:
@@ -570,7 +570,7 @@ router.post("/update", authentification, (request, response) => {
  *       500:
  *         description: Something went wrong while updating user
  */
-router.post("/update/:id", authentification, checkAdmin, (request, response) => {
+router.put("/update/:id", authentification, checkAdmin, (request, response) => {
     const userSchema = joi.object({
         pseudo: joi.string().alphanum().min(3).max(30),
         email: joi.string().email().max(320),
@@ -620,7 +620,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
 /**
  * @swagger
  * /users/delete:
- *   post:
+ *   delete:
  *     summary: Delete the authenticated user
  *     tags: [User]
  *     security:
@@ -672,7 +672,7 @@ router.post("/update/:id", authentification, checkAdmin, (request, response) => 
  *                   type: object
  *                   example: ...
  */
-router.post("/delete", authentification, (request, response) => {
+router.delete("/delete", authentification, (request, response) => {
     // we try to delete user
     deleteUser(request).then((user) => {
         if (user) {
@@ -699,7 +699,7 @@ router.post("/delete", authentification, (request, response) => {
 /**
  * @swagger
  * /users/delete/{id}:
- *   post:
+ *   delete:
  *     summary: Delete user by ID
  *     tags: [User]
  *     security:
@@ -758,7 +758,7 @@ router.post("/delete", authentification, (request, response) => {
  *                   type: object
  *                   example: ...
  */
-router.post("/delete/:id", authentification, checkAdmin, (request, response) => {
+router.delete("/delete/:id", authentification, checkAdmin, (request, response) => {
     // we try to delete user of the given id
     deleteUser(request).then((user) => {
         if (user) {
@@ -785,7 +785,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
 /**
  * @swagger
  * /users/set/admin/{id}:
- *   post:
+ *   put:
  *     summary: Update the role of an user to admin by ID
  *     tags: [User]
  *     security:
@@ -816,7 +816,7 @@ router.post("/delete/:id", authentification, checkAdmin, (request, response) => 
  *       500:
  *         description: Something went wrong while setting user role to admin
  */
-router.post("/set/admin/:id", authentification, checkAdmin, (request, response) => {
+router.put("/set/admin/:id", authentification, checkAdmin, (request, response) => {
     // we try to set to admin the role of the user of the given id
     setAdmin(request).then((user) => {
         if (user) {
@@ -843,7 +843,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
 /**
  * @swagger
  * /users/set/employee/{id}:
- *   post:
+ *   put:
  *     summary: Update the role of a user to employee by ID
  *     tags: [User]
  *     security:
@@ -874,7 +874,7 @@ router.post("/set/admin/:id", authentification, checkAdmin, (request, response) 
  *       500:
  *         description: Something went wrong while setting user role to employee
  */
-router.post("/set/employee/:id", authentification, checkAdmin, (request, response) => {
+router.put("/set/employee/:id", authentification, checkAdmin, (request, response) => {
     // we try to set to employee the role of the user of the given id
     setEmployee(request).then((user) => {
         if (user) {
@@ -901,7 +901,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
 /**
  * @swagger
  * /users/set/user/{id}:
- *   post:
+ *   put:
  *     summary: Update the role of an user by ID
  *     tags: [User]
  *     security:
@@ -932,7 +932,7 @@ router.post("/set/employee/:id", authentification, checkAdmin, (request, respons
  *       500:
  *         description: Something went wrong while setting user role
  */
-router.post("/set/user/:id", authentification, checkAdmin, (request, response) => {
+router.put("/set/user/:id", authentification, checkAdmin, (request, response) => {
     // we try to set to user the role of the user of the given id
     setUser(request).then((user) => {
         if (user) {
