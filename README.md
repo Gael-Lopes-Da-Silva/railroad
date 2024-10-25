@@ -28,3 +28,11 @@ npm test
 ~~~
 
 To add a train station you need to provide an image. For that you can follow this tutorial on how to send images throught Postman: [How to upload image to a POST request](https://community.postman.com/t/how-to-upload-images-to-a-post-request/15256/2).
+
+
+Manualy test the API
+------------------------------------------------------------------
+
+First you will need an admin user. To create one, create a simple user via the /users/register endpoint using valid input. After that, manualy change the `role` field in Mongodb using [Mongosh](https://www.mongodb.com/docs/mongodb-shell/) or [Mongo Compass](https://www.mongodb.com/products/tools/compass).
+
+After that, in the documentation, you will need to go to the /users/login end point and
