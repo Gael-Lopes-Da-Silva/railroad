@@ -10,6 +10,16 @@ Description
 Railroad is a javascript API to manage train, train stations and tickets. It run with [Express](https://www.npmjs.com/package/express) and [Mongodb](https://en.wikipedia.org/wiki/MongoDB). The documentation is auto generated with [SwaggerJsdoc](https://www.npmjs.com/package/swagger-jsdoc).
 
 
+Compatibility
+------------------------------------------------------------------
+
+|   node  | tested |
+| ------- | ------ |
+| 22.10.0 |   ✅   |
+| 20.17.0 |   ✅   |
+| lower   |   ❌   |
+
+
 Usage
 ------------------------------------------------------------------
 
