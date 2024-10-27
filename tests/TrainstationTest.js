@@ -23,7 +23,7 @@ describe("Tests for Trainstation", () => {
             role: "admin",
         });
 
-        const response = await chai.request(app).post("/users/login").send({
+        const response = await chai.request(app).get("/users/login").send({
             email: "admin@example.com",
             password: "admin123",
         });
@@ -51,7 +51,7 @@ describe("Tests for Trainstation", () => {
     it("Get trainstations", async () => {
         const response = await chai
             .request(app)
-            .post("/trainstations/get")
+            .get("/trainstations/get")
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -62,7 +62,7 @@ describe("Tests for Trainstation", () => {
     it("Get trainsation by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/trainstations/get/${trainstationTest.id}`)
+            .get(`/trainstations/get/${trainstationTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -76,7 +76,7 @@ describe("Tests for Trainstation", () => {
     it("Get trainsation by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trainstations/get/6707dd12430c7097898ca3db`)
+            .get(`/trainstations/get/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -87,7 +87,7 @@ describe("Tests for Trainstation", () => {
     it("Update trainsation by id with partial input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trainstations/update/${trainstationTest.id}`)
+            .put(`/trainstations/update/${trainstationTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Versailles",
@@ -105,7 +105,7 @@ describe("Tests for Trainstation", () => {
     it("Update trainsation by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trainstations/update/6707dd12430c7097898ca3db`)
+            .put(`/trainstations/update/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .field("name", "Versailles")
             .field("open_hour", "03:30")
@@ -119,7 +119,7 @@ describe("Tests for Trainstation", () => {
     it("Delete trainsation by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/trainstations/delete/${trainstationTest.id}`)
+            .delete(`/trainstations/delete/${trainstationTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -133,7 +133,7 @@ describe("Tests for Trainstation", () => {
     it("Delete trainsation by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trainstations/delete/6707dd12430c7097898ca3db`)
+            .delete(`/trainstations/delete/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 

@@ -58,7 +58,7 @@ describe("Tests for Ticket", () => {
 
         const response = await chai
             .request(app)
-            .post("/users/login")
+            .get("/users/login")
             .send({
                 email: "admin@example.com",
                 password: "admin123",
@@ -101,7 +101,7 @@ describe("Tests for Ticket", () => {
     it("Get tickets", async () => {
         const response = await chai
             .request(app)
-            .post("/tickets/get")
+            .get("/tickets/get")
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -112,7 +112,7 @@ describe("Tests for Ticket", () => {
     it("Get ticket by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/tickets/get/${ticketTest.id}`)
+            .get(`/tickets/get/${ticketTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -126,7 +126,7 @@ describe("Tests for Ticket", () => {
     it("Get ticket by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/tickets/get/6707dd12430c7097898ca3db`)
+            .get(`/tickets/get/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -137,7 +137,7 @@ describe("Tests for Ticket", () => {
     it("Validate ticket by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/tickets/validate/${ticketTest.id}`)
+            .put(`/tickets/validate/${ticketTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -151,7 +151,7 @@ describe("Tests for Ticket", () => {
     it("Validate ticket by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/tickets/validate/6707dd12430c7097898ca3db`)
+            .put(`/tickets/validate/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 

@@ -49,7 +49,7 @@ describe("Tests for User", () => {
     });
 
     it("Login user", async () => {
-        const response = await chai.request(app).post("/users/login").send({
+        const response = await chai.request(app).get("/users/login").send({
             email: "admin@example.com",
             password: "admin123",
         });
@@ -62,7 +62,7 @@ describe("Tests for User", () => {
     });
 
     it("Login user with false input", async () => {
-        const response = await chai.request(app).post("/users/login").send({
+        const response = await chai.request(app).get("/users/login").send({
             email: "admin@example.com",
             password: "admin",
         });
@@ -72,7 +72,7 @@ describe("Tests for User", () => {
     });
 
     it("Login user with invalid input", async () => {
-        const response = await chai.request(app).post("/users/login").send({
+        const response = await chai.request(app).get("/users/login").send({
             email: "admin",
             password: "ad",
         });
@@ -84,7 +84,7 @@ describe("Tests for User", () => {
     it("Get users", async () => {
         const response = await chai
             .request(app)
-            .post("/users/get")
+            .get("/users/get")
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -95,7 +95,7 @@ describe("Tests for User", () => {
     it("Get user by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/get/${userTest.id}`)
+            .get(`/users/get/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -109,7 +109,7 @@ describe("Tests for User", () => {
     it("Get user by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/get/6707dd12730c7097898ca3db`)
+            .get(`/users/get/6707dd12730c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -120,7 +120,7 @@ describe("Tests for User", () => {
     it("Update user self", async () => {
         const response = await chai
             .request(app)
-            .post("/users/update")
+            .put("/users/update")
             .set("authorization", `Bearer ${token}`)
             .send({
                 pseudo: "adminAfterUpdate",
@@ -137,7 +137,7 @@ describe("Tests for User", () => {
     it("Update user self with partial input", async () => {
         const response = await chai
             .request(app)
-            .post("/users/update")
+            .put("/users/update")
             .set("authorization", `Bearer ${token}`)
             .send({
                 pseudo: "adminAfterUpdate2",
@@ -153,7 +153,7 @@ describe("Tests for User", () => {
     it("Update user self with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post("/users/update")
+            .put("/users/update")
             .set("authorization", `Bearer ${token}`)
             .send({
                 pseudo: "ad",
@@ -167,7 +167,7 @@ describe("Tests for User", () => {
     it("Update user by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/update/${userTest.id}`)
+            .put(`/users/update/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send({
                 pseudo: "testAfterUpdate",
@@ -184,7 +184,7 @@ describe("Tests for User", () => {
     it("Update user by id with partial input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/update/${userTest.id}`)
+            .put(`/users/update/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send({
                 pseudo: "testAfterUpdate2",
@@ -200,7 +200,7 @@ describe("Tests for User", () => {
     it("Update user by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/update/6707dd12437c7097898ca3db`)
+            .put(`/users/update/6707dd12437c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send({
                 pseudo: "testAfterUpdate",
@@ -214,7 +214,7 @@ describe("Tests for User", () => {
     it("Delete user self", async () => {
         const response = await chai
             .request(app)
-            .post("/users/delete")
+            .delete("/users/delete")
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -228,7 +228,7 @@ describe("Tests for User", () => {
     it("Delete user by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/delete/${userTest.id}`)
+            .delete(`/users/delete/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -242,7 +242,7 @@ describe("Tests for User", () => {
     it("Delete user by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/delete/6707dd12470c7097898ca3db`)
+            .delete(`/users/delete/6707dd12470c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -253,7 +253,7 @@ describe("Tests for User", () => {
     it("Set user role to admin", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/set/admin/${userTest.id}`)
+            .put(`/users/set/admin/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -267,7 +267,7 @@ describe("Tests for User", () => {
     it("Set user role to admin with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/set/admin/6707dd12470c7097898ca3db`)
+            .put(`/users/set/admin/6707dd12470c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -278,7 +278,7 @@ describe("Tests for User", () => {
     it("Set user role to employee", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/set/employee/${userTest.id}`)
+            .put(`/users/set/employee/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -292,7 +292,7 @@ describe("Tests for User", () => {
     it("Set user role to employee with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/set/employee/6707dd12470c7097898ca3db`)
+            .put(`/users/set/employee/6707dd12470c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -303,7 +303,7 @@ describe("Tests for User", () => {
     it("Set user role to user", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/set/user/${userTest.id}`)
+            .put(`/users/set/user/${userTest.id}`)
             .set("authorization", `Bearer ${token}`)
             .send();
 
@@ -317,7 +317,7 @@ describe("Tests for User", () => {
     it("Set user role to user with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/users/set/user/6707dd12470c7097898ca3db`)
+            .put(`/users/set/user/6707dd12470c7097898ca3db`)
             .set("authorization", `Bearer ${token}`)
             .send();
 

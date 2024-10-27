@@ -41,7 +41,7 @@ describe("Tests for Train", () => {
 
         const response = await chai
             .request(app)
-            .post("/users/login")
+            .get("/users/login")
             .send({
                 email: "admin@example.com",
                 password: "admin123",
@@ -88,7 +88,7 @@ describe("Tests for Train", () => {
     it("Get trains", async () => {
         const response = await chai
             .request(app)
-            .post("/trains/get")
+            .get("/trains/get")
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -99,7 +99,7 @@ describe("Tests for Train", () => {
     it("Get train by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/get/${trainTest.id}`)
+            .get(`/trains/get/${trainTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -113,7 +113,7 @@ describe("Tests for Train", () => {
     it("Get train by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/get/6707dd12430c7097898ca3db`)
+            .get(`/trains/get/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -124,7 +124,7 @@ describe("Tests for Train", () => {
     it("Update train by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/update/${trainTest.id}`)
+            .put(`/trains/update/${trainTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Ligne Perpignan-Toulouse-Bordeaux",
@@ -143,7 +143,7 @@ describe("Tests for Train", () => {
     it("Update train by id with partial input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/update/${trainTest.id}`)
+            .put(`/trains/update/${trainTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Ligne Perpignan-Toulouse-Bordeaux Test",
@@ -159,7 +159,7 @@ describe("Tests for Train", () => {
     it("Update train by id with invalid input", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/update/6707dd12430c7097898ca3db`)
+            .put(`/trains/update/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send({
                 name: "Ligne Perpignan-Toulouse-Bordeaux",
@@ -175,7 +175,7 @@ describe("Tests for Train", () => {
     it("Delete train by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/delete/${trainTest.id}`)
+            .delete(`/trains/delete/${trainTest.id}`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
@@ -189,7 +189,7 @@ describe("Tests for Train", () => {
     it("Delete train by id", async () => {
         const response = await chai
             .request(app)
-            .post(`/trains/delete/6707dd12430c7097898ca3db`)
+            .delete(`/trains/delete/6707dd12430c7097898ca3db`)
             .set("Authorization", `Bearer ${token}`)
             .send();
 
