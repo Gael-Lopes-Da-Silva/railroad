@@ -1,7 +1,0 @@
-{
-    "command-runner.commands": {
-        "npm start": "npm run start",
-        "npm pack": "npm run pack",
-        "npm test": "npm run test"
-    }
-}
